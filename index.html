@@ -62,17 +62,16 @@
       font-family: Cambria, Cochin, Georgia, Times, sans-serif;
     }
     select { appearance: auto; }
+    #gps { text-transform: none; }
 
-    #descricao { min-height: 90px; resize: vertical; }
-    #descricao-counter {
+    /* Descrição */
+    #descricao, #retorno { min-height: 90px; resize: vertical; }
+    .campo-counter {
       font-size: 11px; color: #888;
       text-align: right; margin: -4px 0 6px 0;
     }
-    #descricao-counter.invalido { color: #e63946; font-weight: bold; }
-    #descricao-counter.valido   { color: #1b5e20; font-weight: bold; }
-
-    /* GPS input — não força uppercase pois é link */
-    #gps { text-transform: none; }
+    .campo-counter.invalido { color: #e63946; font-weight: bold; }
+    .campo-counter.valido   { color: #1b5e20; font-weight: bold; }
 
     /* Preview */
     #previewBox {
@@ -87,8 +86,7 @@
       transition: background 0.3s, color 0.3s, border-color 0.3s;
     }
     #previewBox.modo-claro {
-      background-color: #ffffff;
-      color: #000;
+      background-color: #ffffff; color: #000;
       border-color: #222;
       box-shadow: 0 2px 10px rgba(0,0,0,0.25);
     }
@@ -98,8 +96,7 @@
       transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
     .preview-section.modo-claro {
-      border-color: #222;
-      background: #ffffff;
+      border-color: #222; background: #ffffff;
       box-shadow: 0 3px 14px rgba(0,0,0,0.22);
     }
     .preview-label {
@@ -132,35 +129,56 @@
     }
     .autocomplete-list div:hover { background: #000; color: #fff; }
 
-    /* Botão abrir WhatsApp localização */
-    .btn-wpp-location {
-      background-color: #00b145; color: white;
+    /* Botão GPS / Maps */
+    .btn-gps {
+      background-color: #1a73e8; color: white;
       padding: 10px 14px; font-size: 13px; border-radius: 4px;
       border: none; cursor: pointer; margin-top: 2px; width: 100%;
       font-family: Cambria, Cochin, Georgia, Times, sans-serif; font-weight: bold;
-      letter-spacing: 0.5px;
     }
-    .btn-wpp-location:active { background-color: #009c3b; }
     .gps-hint {
-      font-size: 11px; color: #555; margin: 3px 0 6px 0;
-      line-height: 1.5;
+      font-size: 11px; color: #555; margin: 3px 0 6px 0; line-height: 1.5;
     }
-    .gps-hint strong { color: #1565C0; }
+    .gps-hint strong { color: #1a73e8; }
 
-    /* Main buttons */
-    .button-whatsapp {
+    /* Divisória entre seções de envio */
+    .divisoria-envio {
+      border: none; border-top: 3px dashed #ccc;
+      margin: 20px 0 14px 0;
+    }
+    .envio-titulo {
+      font-size: 13px; font-weight: bold; text-transform: uppercase;
+      text-align: center; color: #555; margin: 0 0 8px 0;
+      letter-spacing: 1px;
+    }
+    .envio-titulo.retorno { color: #1565C0; }
+
+    /* Botões de envio */
+    .button-whatsapp-solicitacao {
       background-color: #00b145; color: white;
-      padding: 14px 20px; margin: 10px 0 6px 0; cursor: pointer;
-      font-size: 16px; border-radius: 8px; border: none;
+      padding: 14px 20px; margin: 6px 0; cursor: pointer;
+      font-size: 15px; border-radius: 8px; border: none;
       box-shadow: 0 0 10px rgba(0,177,69,0.35); width: 100%;
       font-family: Cambria, Cochin, Georgia, Times, sans-serif;
       font-weight: bold; letter-spacing: 1px; transition: background 0.3s;
     }
-    .button-whatsapp:hover { background-color: #009c3b; }
+    .button-whatsapp-solicitacao:hover { background-color: #009c3b; }
+
+    .button-whatsapp-retorno {
+      background-color: #1565C0; color: white;
+      padding: 14px 20px; margin: 6px 0; cursor: pointer;
+      font-size: 15px; border-radius: 8px; border: none;
+      box-shadow: 0 0 10px rgba(21,101,192,0.35); width: 100%;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+      font-weight: bold; letter-spacing: 1px; transition: background 0.3s;
+    }
+    .button-whatsapp-retorno:hover { background-color: #0d47a1; }
+
     .button-limpar {
       background-color: #f44336; color: white;
       padding: 10px 16px; cursor: pointer; font-size: 14px;
       border-radius: 4px; border: none; width: 100%;
+      margin-top: 8px;
       font-family: Cambria, Cochin, Georgia, Times, sans-serif;
     }
 
@@ -199,7 +217,7 @@
       background: rgba(0,0,0,0.45); z-index: 900; display: none;
     }
 
-    /* GIF GPS popup */
+    /* Popup GPS */
     #gps-gif-popup {
       display: none; position: fixed;
       top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -208,11 +226,11 @@
       box-sizing: border-box; box-shadow: 0 0 24px rgba(0,0,0,0.8);
     }
     #gps-gif-popup .gif-title {
-      font-size: 14px; font-weight: bold; color: #25d366; margin-bottom: 10px;
+      font-size: 14px; font-weight: bold; color: #4fc3f7; margin-bottom: 10px;
     }
     #gps-gif-popup img {
       width: 100%; max-width: 300px; border-radius: 8px;
-      border: 2px solid #25d366; display: block; margin: 0 auto 10px auto;
+      border: 2px solid #1a73e8; display: block; margin: 0 auto 10px auto;
     }
     #gps-gif-popup .gif-instrucoes {
       font-size: 12px; line-height: 1.8; text-align: left;
@@ -223,8 +241,8 @@
       padding: 18px; border: 2px dashed #444; border-radius: 8px;
       color: #aaa; font-size: 12px; margin-bottom: 10px; display: none;
     }
-    .btn-abrir-wpp {
-      background: #25d366; color: #fff; border: none; border-radius: 8px;
+    .btn-abrir-maps-popup {
+      background: #1a73e8; color: #fff; border: none; border-radius: 8px;
       padding: 12px 20px; font-size: 14px; cursor: pointer; margin: 4px;
       font-family: Cambria, Cochin, Georgia, Times, sans-serif; font-weight: bold;
       width: calc(100% - 8px);
@@ -234,6 +252,18 @@
       padding: 10px 20px; font-size: 13px; cursor: pointer; margin: 4px;
       font-family: Cambria, Cochin, Georgia, Times, sans-serif;
       width: calc(100% - 8px);
+    }
+
+    /* Assinatura */
+    .assinatura {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11px;
+      color: #888;
+      margin-top: 30px;
+      padding-top: 14px;
+      border-top: 1px solid #ddd;
     }
 
     #equipe { letter-spacing: 2px; font-weight: bold; }
@@ -273,24 +303,28 @@
   </div>
 </div>
 
-<!-- POPUP: GIF INSTRUÇÃO GPS -->
+<!-- POPUP: GPS INSTRUÇÃO -->
 <div id="gps-gif-popup">
-  <div class="gif-title">📍 COMO COMPARTILHAR LOCALIZAÇÃO NO WHATSAPP</div>
+  <div class="gif-title">📍 COMO COPIAR O LINK DE LOCALIZAÇÃO</div>
   <img src="instrucao_gps.jpg" alt="Tutorial GPS"
        onerror="this.style.display='none'; document.getElementById('gif-erro').style.display='block'">
   <div id="gif-erro">
     📂 Coloque o arquivo <strong>instrucao_gps.jpg</strong> na mesma pasta deste HTML.
   </div>
   <div class="gif-instrucoes">
+    <strong style="color:#25d366;">📱 PASSO 1 — WHATSAPP</strong><br>
     1️⃣ Abra uma conversa no WhatsApp<br>
     2️⃣ Toque no 📎 (anexo)<br>
     3️⃣ Selecione <strong>"Localização"</strong><br>
-    4️⃣ Toque em <strong>"Compartilhar localização atual"</strong><br>
+    4️⃣ Toque em <strong>"Compartilhar localização atual"</strong><br><br>
+    <strong style="color:#4fc3f7;">🗺️ PASSO 2 — MAPS</strong><br>
     5️⃣ Pressione e segure na mensagem enviada<br>
-    6️⃣ Toque em <strong>"Copiar link"</strong><br>
-    7️⃣ Volte aqui e cole no campo GPS
+    6️⃣ Toque em <strong>"Abrir link"</strong> — abrirá o Maps<br>
+    7️⃣ No Maps, toque em <strong>"Compartilhar"</strong><br>
+    8️⃣ Selecione <strong>"Copiar link"</strong><br>
+    9️⃣ Volte aqui e cole no campo GPS
   </div>
-  <button class="btn-abrir-wpp" onclick="abrirWhatsApp()">💬 ABRIR WHATSAPP</button>
+  <button class="btn-abrir-maps-popup" onclick="abrirMaps()">🗺️ ABRIR MAPS</button>
   <button class="btn-fechar-gif" onclick="fecharGifPopup()">✖ FECHAR</button>
 </div>
 
@@ -301,7 +335,6 @@
 
     <h2>Dados da Solicitação</h2>
 
-    <!-- ALIMENTADOR -->
     <label>Alimentador: <span class="req">*</span></label>
     <div class="autocomplete-wrapper">
       <input type="text" id="alimentador" placeholder="DIGITE PARA FILTRAR..." autocomplete="off"
@@ -309,18 +342,15 @@
       <div class="autocomplete-list" id="alimentador-list"></div>
     </div>
 
-    <!-- ÁREA -->
     <label>Área: <span class="req">*</span></label>
     <input type="text" id="area" placeholder="DIGITE A ÁREA"
            oninput="soMaiuscula(this); gerarMensagem()">
 
-    <!-- TRAFO / ESTRUTURA / TOMBAMENTO (campo único) -->
     <label>Trafo / Estrutura / Tombamento: <span class="req">*</span></label>
-    <span class="label-sub">Preencha um dos três — use traço para separar se informar mais de um. Ex: TRF-01A</span>
+    <span class="label-sub">Preencha um dos três — separe com traço se informar mais de um. Ex: TRF-01A</span>
     <input type="text" id="trafo" placeholder="EX: TRF-01A  ou  EST-002  ou  TOMB-005" maxlength="40"
            oninput="mascaraTrafo(this); gerarMensagem()">
 
-    <!-- TIPO DE SERVIÇO -->
     <label>Tipo de Serviço: <span class="req">*</span></label>
     <select id="tipoServico" onchange="gerarMensagem()">
       <option value="">-- SELECIONE --</option>
@@ -333,37 +363,32 @@
       <option value="OUTRO">OUTRO</option>
     </select>
 
-    <!-- GPS -->
     <label>GPS (link): <span class="req">*</span></label>
-    <input type="text" id="gps" placeholder="Cole aqui o link do WhatsApp ou Maps"
+    <input type="text" id="gps" placeholder="Cole aqui o link copiado do Maps"
            oninput="gerarMensagem()" style="text-transform:none;">
-    <button class="btn-wpp-location" onclick="abrirGifGPS()">
-      💬 VER TUTORIAL E ABRIR WHATSAPP
+    <button class="btn-gps" onclick="abrirGifGPS()">
+      🗺️ VER TUTORIAL E ABRIR MAPS
     </button>
     <span class="gps-hint">
-      Abra o WhatsApp → 📎 Anexo → Localização → Compartilhar localização atual →
-      segure na mensagem → <strong>Copiar link</strong> → cole acima
+      Toque acima → veja as instruções → abra o Maps →
+      toque na sua localização → <strong>Compartilhar → Copiar link</strong> → cole acima
     </span>
 
-    <!-- ENDEREÇO -->
     <label>Endereço: <span class="req">*</span></label>
     <input type="text" id="endereco" placeholder="RUA - BAIRRO - NUMERO" maxlength="80"
            oninput="mascaraEndereco(this); gerarMensagem()">
 
-    <!-- EQUIPE -->
     <label>Equipe: <span class="req">*</span></label>
     <input type="text" id="equipe" placeholder="XXX-XX-NNX" maxlength="10"
            oninput="aplicarMascaraLead(this); gerarMensagem()">
 
-    <!-- DESCRIÇÃO -->
     <h2>Descrição do Serviço</h2>
     <label>Descreva o Serviço: <span class="req">*</span></label>
-    <textarea id="descricao" placeholder="DESCREVA O QUE FOI / SERÁ REALIZADO..."
-              oninput="soMaiuscula(this); atualizarContador(); gerarMensagem()"></textarea>
-    <div id="descricao-counter" class="invalido">0 / mínimo 20 caracteres</div>
+    <textarea id="descricao" placeholder="DESCREVA O QUE SERÁ REALIZADO..."
+              oninput="soMaiuscula(this); atualizarContador('descricao','desc-counter'); gerarMensagem()"></textarea>
+    <div id="desc-counter" class="campo-counter invalido">0 / mínimo 20 caracteres</div>
 
     <br>
-
     <button class="btn-toggle-modo" id="btn-modo" onclick="alternarModo()">☀️ MODO CLARO</button>
 
     <div class="preview-section" id="preview-section">
@@ -371,12 +396,37 @@
       <textarea id="previewBox" readonly placeholder="A mensagem aparecerá aqui..."></textarea>
     </div>
 
-    <br>
-    <button class="button-whatsapp" onclick="enviarWhatsApp()">📲 ENVIAR SOLICITAÇÃO VIA WHATSAPP</button>
-    <br>
+    <!-- ══════════ ENVIO SOLICITAÇÃO ══════════ -->
+    <hr class="divisoria-envio">
+    <p class="envio-titulo">📤 Enviar Solicitação</p>
+    <button class="button-whatsapp-solicitacao" onclick="enviarSolicitacao()">
+      📲 ENVIAR SOLICITAÇÃO VIA WHATSAPP
+    </button>
+
+    <!-- ══════════ ENVIO RETORNO / BAIXA ══════════ -->
+    <hr class="divisoria-envio">
+    <p class="envio-titulo retorno">📥 Retorno / Baixa</p>
+
+    <label>Descrição do Retorno: <span class="req">*</span></label>
+    <textarea id="retorno" placeholder="DESCREVA O QUE FOI EXECUTADO / RESULTADO..."
+              oninput="soMaiuscula(this); atualizarContador('retorno','ret-counter'); gerarRetorno()"></textarea>
+    <div id="ret-counter" class="campo-counter invalido">0 / mínimo 20 caracteres</div>
+
+    <button class="button-whatsapp-retorno" onclick="enviarRetorno()">
+      📋 ENVIAR RETORNO/BAIXA VIA WHATSAPP
+    </button>
+
+    <!-- ══════════ LIMPAR ══════════ -->
+    <hr class="divisoria-envio">
     <button class="button-limpar" onclick="pedirLimpar()">🗑️ LIMPAR CAMPOS</button>
 
   </div>
+
+  <!-- ASSINATURA -->
+  <p class="assinatura">
+    © 2025 Emanuel Aguiar (Assistente Administrativo Insourcing - Enel CE)<br>
+    Todos os direitos reservados.
+  </p>
 </div>
 
 <script>
@@ -410,11 +460,11 @@ const alimentadores = [
   "UMB01I1","UMB01I2"
 ];
 
-const CAMPOS_IDS = ['alimentador','area','trafo','tipoServico','gps','endereco','equipe','descricao'];
-const MIN_DESCRICAO = 20;
-let modoEscuro = true;
+const CAMPOS_IDS = ['alimentador','area','trafo','tipoServico','gps','endereco','equipe','descricao','retorno'];
+const MIN_CHARS  = 20;
+let modoEscuro   = true;
 
-// MÁSCARAS
+// ── MÁSCARAS ──────────────────────────────────────────────
 function soMaiuscula(el) { el.value = el.value.toUpperCase(); }
 function mascaraTrafo(el) { el.value = el.value.toUpperCase().replace(/[^A-Z0-9\-]/g, ''); }
 function mascaraEndereco(el) { el.value = el.value.toUpperCase().replace(/[^A-Z0-9 \-]/g, ''); }
@@ -427,20 +477,20 @@ function aplicarMascaraLead(i) {
   i.value = r;
 }
 
-// CONTADOR DESCRIÇÃO
-function atualizarContador() {
-  const val = document.getElementById('descricao').value.trim().length;
-  const el  = document.getElementById('descricao-counter');
-  if (val < MIN_DESCRICAO) {
-    el.textContent = `${val} / mínimo ${MIN_DESCRICAO} caracteres`;
-    el.className = 'invalido';
+// ── CONTADOR ──────────────────────────────────────────────
+function atualizarContador(fieldId, counterId) {
+  const val = document.getElementById(fieldId).value.trim().length;
+  const el  = document.getElementById(counterId);
+  if (val < MIN_CHARS) {
+    el.textContent = `${val} / mínimo ${MIN_CHARS} caracteres`;
+    el.className = 'campo-counter invalido';
   } else {
     el.textContent = `✔ ${val} caracteres`;
-    el.className = 'valido';
+    el.className = 'campo-counter valido';
   }
 }
 
-// AUTOCOMPLETE ALIMENTADOR
+// ── AUTOCOMPLETE ──────────────────────────────────────────
 function filtrarAlimentador(input) {
   const val = input.value.toUpperCase();
   const lista = document.getElementById('alimentador-list');
@@ -466,7 +516,7 @@ function fecharListaDelay() {
   setTimeout(() => { document.getElementById('alimentador-list').style.display = 'none'; gerarMensagem(); }, 200);
 }
 
-// GPS / WHATSAPP
+// ── GPS / MAPS ─────────────────────────────────────────────
 function abrirGifGPS() {
   document.getElementById('gps-gif-popup').style.display = 'block';
   showOverlay();
@@ -475,14 +525,20 @@ function fecharGifPopup() {
   document.getElementById('gps-gif-popup').style.display = 'none';
   hideOverlay();
 }
-function abrirWhatsApp() {
+function abrirMaps() {
   document.getElementById('gps-gif-popup').style.display = 'none';
   hideOverlay();
-  // Tenta abrir o app do WhatsApp diretamente
-  window.open('https://wa.me', '_blank');
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => window.open(`https://maps.google.com/?q=${pos.coords.latitude.toFixed(6)},${pos.coords.longitude.toFixed(6)}`, '_blank'),
+      ()  => window.open('https://maps.google.com', '_blank')
+    );
+  } else {
+    window.open('https://maps.google.com', '_blank');
+  }
 }
 
-// GERAR MENSAGEM
+// ── GERAR MENSAGEM SOLICITAÇÃO ─────────────────────────────
 function gerarMensagem() {
   const v = id => document.getElementById(id).value.trim();
   let msg = '*SOLICITAÇÃO DE SERVIÇO*\n';
@@ -499,7 +555,27 @@ function gerarMensagem() {
   document.getElementById('previewBox').value = msg;
 }
 
-// MODO ESCURO/CLARO
+// ── GERAR MENSAGEM RETORNO ─────────────────────────────────
+function gerarRetorno() {
+  // só atualiza contador, mensagem do retorno é gerada no envio
+}
+
+function montarMsgRetorno() {
+  const v = id => document.getElementById(id).value.trim();
+  let msg = '*RETORNO / BAIXA DE SERVIÇO*\n';
+  msg += '━━━━━━━━━━━━━━━━━━━━\n';
+  if (v('alimentador')) msg += `*ALIMENTADOR:* ${v('alimentador')}\n`;
+  if (v('area'))        msg += `*ÁREA:* ${v('area')}\n`;
+  if (v('trafo'))       msg += `*TRAFO / ESTRUTURA / TOMBAMENTO:* ${v('trafo')}\n`;
+  if (v('tipoServico')) msg += `*TIPO DE SERVIÇO:* ${v('tipoServico')}\n`;
+  if (v('endereco'))    msg += `*ENDEREÇO:* ${v('endereco')}\n`;
+  if (v('equipe'))      msg += `*EQUIPE:* ${v('equipe')}\n`;
+  if (v('retorno'))     msg += `*RETORNO:* ${v('retorno')}\n`;
+  msg += '━━━━━━━━━━━━━━━━━━━━';
+  return msg;
+}
+
+// ── MODO ESCURO/CLARO ──────────────────────────────────────
 function alternarModo() {
   modoEscuro = !modoEscuro;
   const box     = document.getElementById('previewBox');
@@ -518,8 +594,8 @@ function alternarModo() {
   }
 }
 
-// VALIDAÇÃO
-function verificarCampos() {
+// ── VALIDAÇÃO ──────────────────────────────────────────────
+function verificarSolicitacao() {
   const obrigatorios = [
     { id: 'alimentador', label: '📡 ALIMENTADOR' },
     { id: 'area',        label: '🗺️ ÁREA' },
@@ -532,37 +608,60 @@ function verificarCampos() {
   ];
   const faltando = obrigatorios.filter(f => !document.getElementById(f.id).value.trim());
   if (faltando.length) {
-    document.getElementById('obrigatorio-msg').innerHTML =
-      'PREENCHA OS CAMPOS OBRIGATÓRIOS 🚨<br><br>' + faltando.map(f => f.label).join('<br>');
-    document.getElementById('obrigatorio-popup').style.display = 'block';
-    showOverlay();
+    mostrarErro('PREENCHA OS CAMPOS OBRIGATÓRIOS 🚨<br><br>' + faltando.map(f => f.label).join('<br>'));
     return false;
   }
-  if (document.getElementById('descricao').value.trim().length < MIN_DESCRICAO) {
-    document.getElementById('obrigatorio-msg').innerHTML =
-      `⚠️ DESCRIÇÃO muito curta!<br>Mínimo ${MIN_DESCRICAO} caracteres.`;
-    document.getElementById('obrigatorio-popup').style.display = 'block';
-    showOverlay();
+  if (document.getElementById('descricao').value.trim().length < MIN_CHARS) {
+    mostrarErro(`⚠️ DESCRIÇÃO muito curta!<br>Mínimo ${MIN_CHARS} caracteres.`);
     return false;
   }
   if (document.getElementById('equipe').value.trim().length < 8) {
-    document.getElementById('obrigatorio-msg').innerHTML =
-      '⚠️ EQUIPE incompleta!<br>Formato: XXX-XX-NNX<br>Ex: ABC-DE-12F';
-    document.getElementById('obrigatorio-popup').style.display = 'block';
-    showOverlay();
+    mostrarErro('⚠️ EQUIPE incompleta!<br>Formato: XXX-XX-NNX<br>Ex: ABC-DE-12F');
     return false;
   }
   return true;
 }
 
-// WHATSAPP ENVIO
-function enviarWhatsApp() {
-  if (!verificarCampos()) return;
-  gerarMensagem();
-  window.open(`https://wa.me/?text=${encodeURIComponent(document.getElementById('previewBox').value)}`, '_blank');
+function verificarRetorno() {
+  const obrigatorios = [
+    { id: 'alimentador', label: '📡 ALIMENTADOR' },
+    { id: 'area',        label: '🗺️ ÁREA' },
+    { id: 'equipe',      label: '👷 EQUIPE' },
+    { id: 'retorno',     label: '📋 DESCRIÇÃO DO RETORNO' },
+  ];
+  const faltando = obrigatorios.filter(f => !document.getElementById(f.id).value.trim());
+  if (faltando.length) {
+    mostrarErro('PREENCHA OS CAMPOS OBRIGATÓRIOS 🚨<br><br>' + faltando.map(f => f.label).join('<br>'));
+    return false;
+  }
+  if (document.getElementById('retorno').value.trim().length < MIN_CHARS) {
+    mostrarErro(`⚠️ RETORNO muito curto!<br>Mínimo ${MIN_CHARS} caracteres.`);
+    return false;
+  }
+  return true;
 }
 
-// LIMPAR
+function mostrarErro(html) {
+  document.getElementById('obrigatorio-msg').innerHTML = html;
+  document.getElementById('obrigatorio-popup').style.display = 'block';
+  showOverlay();
+}
+
+// ── ENVIOS WHATSAPP ────────────────────────────────────────
+function enviarSolicitacao() {
+  if (!verificarSolicitacao()) return;
+  gerarMensagem();
+  const msg = document.getElementById('previewBox').value;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function enviarRetorno() {
+  if (!verificarRetorno()) return;
+  const msg = montarMsgRetorno();
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// ── LIMPAR ─────────────────────────────────────────────────
 function pedirLimpar() {
   document.getElementById('limpar-confirm-popup').style.display = 'block';
   showOverlay();
@@ -571,23 +670,25 @@ function confirmarLimpar() {
   fecharPopup('limpar-confirm-popup');
   CAMPOS_IDS.forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('previewBox').value = '';
-  atualizarContador();
+  atualizarContador('descricao', 'desc-counter');
+  atualizarContador('retorno',   'ret-counter');
 }
 
-// NOVO / MANTER
+// ── NOVO / MANTER ──────────────────────────────────────────
 function novoPreenchimento() { confirmarLimpar(); fecharPopup('novo-popup'); }
 function manterDados()       { fecharPopup('novo-popup'); gerarMensagem(); }
 
-// OVERLAY
+// ── OVERLAY / POPUPS ───────────────────────────────────────
 function showOverlay() { document.getElementById('popupOverlay').style.display = 'block'; }
 function hideOverlay() { document.getElementById('popupOverlay').style.display = 'none'; }
 function fecharPopup(id) { document.getElementById(id).style.display = 'none'; hideOverlay(); }
 
-// INIT
+// ── INIT ───────────────────────────────────────────────────
 window.onload = function() {
   document.getElementById('novo-popup').style.display = 'block';
   showOverlay();
-  atualizarContador();
+  atualizarContador('descricao', 'desc-counter');
+  atualizarContador('retorno',   'ret-counter');
   document.querySelectorAll('#formFields input, #formFields select, #formFields textarea').forEach(el => {
     el.addEventListener('input',  gerarMensagem);
     el.addEventListener('change', gerarMensagem);
