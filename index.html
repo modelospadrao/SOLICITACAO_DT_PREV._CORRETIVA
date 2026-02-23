@@ -164,15 +164,7 @@
     }
     .button-whatsapp-solicitacao:hover { background-color: #009c3b; }
 
-    .button-whatsapp-retorno {
-      background-color: #1565C0; color: white;
-      padding: 14px 20px; margin: 6px 0; cursor: pointer;
-      font-size: 15px; border-radius: 8px; border: none;
-      box-shadow: 0 0 10px rgba(21,101,192,0.35); width: 100%;
-      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
-      font-weight: bold; letter-spacing: 1px; transition: background 0.3s;
-    }
-    .button-whatsapp-retorno:hover { background-color: #0d47a1; }
+
 
     .button-limpar {
       background-color: #f44336; color: white;
@@ -403,18 +395,7 @@
       📲 ENVIAR SOLICITAÇÃO VIA WHATSAPP
     </button>
 
-    <!-- ══════════ ENVIO RETORNO / BAIXA ══════════ -->
-    <hr class="divisoria-envio">
-    <p class="envio-titulo retorno">📥 Retorno / Baixa</p>
 
-    <label>Descrição do Retorno: <span class="req">*</span></label>
-    <textarea id="retorno" placeholder="DESCREVA O QUE FOI EXECUTADO / RESULTADO..."
-              oninput="soMaiuscula(this); atualizarContador('retorno','ret-counter'); gerarRetorno()"></textarea>
-    <div id="ret-counter" class="campo-counter invalido">0 / mínimo 20 caracteres</div>
-
-    <button class="button-whatsapp-retorno" onclick="enviarRetorno()">
-      📋 ENVIAR RETORNO/BAIXA VIA WHATSAPP
-    </button>
 
     <!-- ══════════ LIMPAR ══════════ -->
     <hr class="divisoria-envio">
@@ -460,7 +441,7 @@ const alimentadores = [
   "UMB01I1","UMB01I2"
 ];
 
-const CAMPOS_IDS = ['alimentador','area','trafo','tipoServico','gps','endereco','equipe','descricao','retorno'];
+const CAMPOS_IDS = ['alimentador','area','trafo','tipoServico','gps','endereco','equipe','descricao'];
 const MIN_CHARS  = 20;
 let modoEscuro   = true;
 
@@ -555,25 +536,7 @@ function gerarMensagem() {
   document.getElementById('previewBox').value = msg;
 }
 
-// ── GERAR MENSAGEM RETORNO ─────────────────────────────────
-function gerarRetorno() {
-  // só atualiza contador, mensagem do retorno é gerada no envio
-}
 
-function montarMsgRetorno() {
-  const v = id => document.getElementById(id).value.trim();
-  let msg = '*RETORNO / BAIXA DE SERVIÇO*\n';
-  msg += '━━━━━━━━━━━━━━━━━━━━\n';
-  if (v('alimentador')) msg += `*ALIMENTADOR:* ${v('alimentador')}\n`;
-  if (v('area'))        msg += `*ÁREA:* ${v('area')}\n`;
-  if (v('trafo'))       msg += `*TRAFO / ESTRUTURA / TOMBAMENTO:* ${v('trafo')}\n`;
-  if (v('tipoServico')) msg += `*TIPO DE SERVIÇO:* ${v('tipoServico')}\n`;
-  if (v('endereco'))    msg += `*ENDEREÇO:* ${v('endereco')}\n`;
-  if (v('equipe'))      msg += `*EQUIPE:* ${v('equipe')}\n`;
-  if (v('retorno'))     msg += `*RETORNO:* ${v('retorno')}\n`;
-  msg += '━━━━━━━━━━━━━━━━━━━━';
-  return msg;
-}
 
 // ── MODO ESCURO/CLARO ──────────────────────────────────────
 function alternarModo() {
@@ -622,24 +585,7 @@ function verificarSolicitacao() {
   return true;
 }
 
-function verificarRetorno() {
-  const obrigatorios = [
-    { id: 'alimentador', label: '📡 ALIMENTADOR' },
-    { id: 'area',        label: '🗺️ ÁREA' },
-    { id: 'equipe',      label: '👷 EQUIPE' },
-    { id: 'retorno',     label: '📋 DESCRIÇÃO DO RETORNO' },
-  ];
-  const faltando = obrigatorios.filter(f => !document.getElementById(f.id).value.trim());
-  if (faltando.length) {
-    mostrarErro('PREENCHA OS CAMPOS OBRIGATÓRIOS 🚨<br><br>' + faltando.map(f => f.label).join('<br>'));
-    return false;
-  }
-  if (document.getElementById('retorno').value.trim().length < MIN_CHARS) {
-    mostrarErro(`⚠️ RETORNO muito curto!<br>Mínimo ${MIN_CHARS} caracteres.`);
-    return false;
-  }
-  return true;
-}
+
 
 function mostrarErro(html) {
   document.getElementById('obrigatorio-msg').innerHTML = html;
@@ -655,11 +601,7 @@ function enviarSolicitacao() {
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-function enviarRetorno() {
-  if (!verificarRetorno()) return;
-  const msg = montarMsgRetorno();
-  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-}
+
 
 // ── LIMPAR ─────────────────────────────────────────────────
 function pedirLimpar() {
@@ -671,7 +613,6 @@ function confirmarLimpar() {
   CAMPOS_IDS.forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('previewBox').value = '';
   atualizarContador('descricao', 'desc-counter');
-  atualizarContador('retorno',   'ret-counter');
 }
 
 // ── NOVO / MANTER ──────────────────────────────────────────
@@ -688,7 +629,6 @@ window.onload = function() {
   document.getElementById('novo-popup').style.display = 'block';
   showOverlay();
   atualizarContador('descricao', 'desc-counter');
-  atualizarContador('retorno',   'ret-counter');
   document.querySelectorAll('#formFields input, #formFields select, #formFields textarea').forEach(el => {
     el.addEventListener('input',  gerarMensagem);
     el.addEventListener('change', gerarMensagem);
