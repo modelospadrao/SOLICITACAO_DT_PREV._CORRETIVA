@@ -405,7 +405,7 @@
 
   <!-- ASSINATURA -->
   <p class="assinatura">
-    © 2025 Emanuel Aguiar (Assistente Administrativo Insourcing - Enel CE)<br>
+    © 2026 Emanuel Aguiar (Tecnico Eletrotecnico Junior)<br>
     Todos os direitos reservados.
   </p>
 </div>
@@ -523,7 +523,7 @@ function abrirMaps() {
 function gerarMensagem() {
   const v = id => document.getElementById(id).value.trim();
   let msg = '*SOLICITAÇÃO DE SERVIÇO*\n';
-  msg += '━━━━━━━━━━━━━━━━━━━━\n';
+  msg += '━━━━━━━━━━━━━\n';
   if (v('alimentador')) msg += `*ALIMENTADOR:* ${v('alimentador')}\n`;
   if (v('area'))        msg += `*ÁREA:* ${v('area')}\n`;
   if (v('trafo'))       msg += `*TRAFO / ESTRUTURA / TOMBAMENTO:* ${v('trafo')}\n`;
@@ -532,7 +532,7 @@ function gerarMensagem() {
   if (v('endereco'))    msg += `*ENDEREÇO:* ${v('endereco')}\n`;
   if (v('equipe'))      msg += `*EQUIPE:* ${v('equipe')}\n`;
   if (v('descricao'))   msg += `*DESCRIÇÃO:* ${v('descricao')}\n`;
-  msg += '━━━━━━━━━━━━━━━━━━━━';
+  msg += '━━━━━━━━━━━━━';
   document.getElementById('previewBox').value = msg;
 }
 
