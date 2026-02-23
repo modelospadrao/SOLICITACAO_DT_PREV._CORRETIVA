@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOLICITAÇÃO DE SERVIÇO DTS</title>
+  <style>
+    body {
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+      overscroll-behavior-y: none;
+      margin: 0; padding: 0;
+      background: #fafafa;
+    }
+    .container {
+      width: 94%;
+      max-width: 480px;
+      margin: auto;
+      padding-bottom: 40px;
+    }
+    h1 {
+      color: #e63946;
+      font-size: 20px;
+      text-align: center;
+      margin: 18px 0 6px 0;
+      border-bottom: 4px solid #e63946;
+      padding-bottom: 6px;
+      letter-spacing: 1px;
+    }
+    h2 {
+      color: #e63946;
+      font-size: 16px;
+      text-align: center;
+      margin: 18px 0 4px 0;
+      border-bottom: 3px solid #e63946;
+      padding-bottom: 4px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin: 10px 0 2px 0;
+      text-transform: uppercase;
+    }
+    .label-sub {
+      font-size: 11px;
+      color: #777;
+      font-weight: normal;
+      text-transform: none;
+      display: block;
+      margin: -2px 0 4px 0;
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 9px;
+      margin: 2px 0 6px 0;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      text-transform: uppercase;
+      background-color: #f0f0f0;
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+    }
+    select { appearance: auto; }
+
+    #descricao { min-height: 90px; resize: vertical; }
+    #descricao-counter {
+      font-size: 11px; color: #888;
+      text-align: right; margin: -4px 0 6px 0;
+    }
+    #descricao-counter.invalido { color: #e63946; font-weight: bold; }
+    #descricao-counter.valido   { color: #1b5e20; font-weight: bold; }
+
+    /* GPS input — não força uppercase pois é link */
+    #gps { text-transform: none; }
+
+    /* Preview */
+    #previewBox {
+      width: 100%; min-height: 200px;
+      padding: 12px; margin: 8px 0;
+      font-size: 13px;
+      border: 2px solid #333;
+      background-color: #111; color: #fff;
+      box-sizing: border-box; border-radius: 6px;
+      white-space: pre-wrap; font-family: monospace;
+      resize: vertical; text-transform: uppercase;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+    #previewBox.modo-claro {
+      background-color: #ffffff;
+      color: #000;
+      border-color: #222;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    }
+    .preview-section {
+      border: 2px solid #333; border-radius: 8px;
+      padding: 10px; background: #1a1a1a; margin-top: 10px;
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .preview-section.modo-claro {
+      border-color: #222;
+      background: #ffffff;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.22);
+    }
+    .preview-label {
+      font-size: 13px; font-weight: bold; text-transform: uppercase;
+      margin: 0 0 6px 0; color: #aaa;
+    }
+    .preview-section.modo-claro .preview-label { color: #111; }
+
+    .btn-toggle-modo {
+      background: #333; color: #fff; border: none;
+      padding: 7px 14px; border-radius: 20px; font-size: 12px;
+      cursor: pointer; margin-bottom: 6px;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+      transition: background 0.3s;
+    }
+    .btn-toggle-modo.claro { background: #00b145; }
+
+    /* Autocomplete */
+    .autocomplete-wrapper { position: relative; }
+    .autocomplete-list {
+      display: none; position: absolute; z-index: 999;
+      background: #fff; border: 1px solid #ccc; width: 100%;
+      max-height: 200px; overflow-y: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      border-radius: 0 0 4px 4px;
+    }
+    .autocomplete-list div {
+      padding: 10px 12px; cursor: pointer;
+      font-size: 14px; border-bottom: 1px solid #eee; text-transform: uppercase;
+    }
+    .autocomplete-list div:hover { background: #000; color: #fff; }
+
+    /* Botão abrir WhatsApp localização */
+    .btn-wpp-location {
+      background-color: #00b145; color: white;
+      padding: 10px 14px; font-size: 13px; border-radius: 4px;
+      border: none; cursor: pointer; margin-top: 2px; width: 100%;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif; font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .btn-wpp-location:active { background-color: #009c3b; }
+    .gps-hint {
+      font-size: 11px; color: #555; margin: 3px 0 6px 0;
+      line-height: 1.5;
+    }
+    .gps-hint strong { color: #1565C0; }
+
+    /* Main buttons */
+    .button-whatsapp {
+      background-color: #00b145; color: white;
+      padding: 14px 20px; margin: 10px 0 6px 0; cursor: pointer;
+      font-size: 16px; border-radius: 8px; border: none;
+      box-shadow: 0 0 10px rgba(0,177,69,0.35); width: 100%;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+      font-weight: bold; letter-spacing: 1px; transition: background 0.3s;
+    }
+    .button-whatsapp:hover { background-color: #009c3b; }
+    .button-limpar {
+      background-color: #f44336; color: white;
+      padding: 10px 16px; cursor: pointer; font-size: 14px;
+      border-radius: 4px; border: none; width: 100%;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+    }
+
+    /* Popups */
+    .popup {
+      display: none; position: fixed;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      padding: 20px; background-color: rgba(0,0,0,0.88);
+      color: white; font-size: 15px; border-radius: 8px;
+      z-index: 1100; box-shadow: 0 0 16px rgba(0,0,0,0.5);
+      text-align: left; max-width: 92vw; min-width: 250px; box-sizing: border-box;
+    }
+    .popup-buttons {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 8px; margin-top: 12px;
+    }
+    .popup-buttons button {
+      flex: 1 1 auto; font-size: 13px; padding: 9px 14px;
+      min-width: 100px; border-radius: 4px; cursor: pointer;
+      border: none; background: #fff; color: #000;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+    }
+    .popup-confirm {
+      background-color: #fff; color: #c00; font-size: 15px;
+      border-radius: 10px; padding: 22px;
+      box-shadow: 0 0 16px rgba(0,0,0,0.25); text-align: center;
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1300; display: none; max-width: 92vw; box-sizing: border-box;
+    }
+    .btn-sim { background-color: green; color: white; padding: 9px 22px; font-size: 14px; border: none; border-radius: 8px; margin: 4px; cursor: pointer; }
+    .btn-nao { background-color: red;   color: white; padding: 9px 22px; font-size: 14px; border: none; border-radius: 8px; margin: 4px; cursor: pointer; }
+
+    #popupOverlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.45); z-index: 900; display: none;
+    }
+
+    /* GIF GPS popup */
+    #gps-gif-popup {
+      display: none; position: fixed;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: #111; color: #fff; border-radius: 12px; padding: 18px;
+      z-index: 1400; text-align: center; max-width: 94vw; width: 340px;
+      box-sizing: border-box; box-shadow: 0 0 24px rgba(0,0,0,0.8);
+    }
+    #gps-gif-popup .gif-title {
+      font-size: 14px; font-weight: bold; color: #25d366; margin-bottom: 10px;
+    }
+    #gps-gif-popup img {
+      width: 100%; max-width: 300px; border-radius: 8px;
+      border: 2px solid #25d366; display: block; margin: 0 auto 10px auto;
+    }
+    #gps-gif-popup .gif-instrucoes {
+      font-size: 12px; line-height: 1.8; text-align: left;
+      background: rgba(255,255,255,0.07); border-radius: 6px;
+      padding: 10px 12px; margin-bottom: 12px;
+    }
+    #gif-erro {
+      padding: 18px; border: 2px dashed #444; border-radius: 8px;
+      color: #aaa; font-size: 12px; margin-bottom: 10px; display: none;
+    }
+    .btn-abrir-wpp {
+      background: #25d366; color: #fff; border: none; border-radius: 8px;
+      padding: 12px 20px; font-size: 14px; cursor: pointer; margin: 4px;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif; font-weight: bold;
+      width: calc(100% - 8px);
+    }
+    .btn-fechar-gif {
+      background: #444; color: #fff; border: none; border-radius: 8px;
+      padding: 10px 20px; font-size: 13px; cursor: pointer; margin: 4px;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+      width: calc(100% - 8px);
+    }
+
+    #equipe { letter-spacing: 2px; font-weight: bold; }
+    span.req { color: #e63946; }
+  </style>
+</head>
+<body>
+
+<div id="popupOverlay"></div>
+
+<!-- POPUP: NOVO OU MANTER -->
+<div id="novo-popup" class="popup" style="text-align:center;">
+  <p>⚡ <strong>SOLICITAÇÃO DE SERVIÇO  DT</strong><br><br>
+    Deseja iniciar um <strong>NOVO</strong> preenchimento<br>
+    ou <strong>MANTER</strong> os dados anteriores?
+  </p>
+  <div class="popup-buttons">
+    <button style="background:#e63946;color:#fff;" onclick="novoPreenchimento()">🆕 NOVO</button>
+    <button style="background:#333;color:#fff;"    onclick="manterDados()">📋 MANTER</button>
+  </div>
+</div>
+
+<!-- POPUP: OBRIGATÓRIOS -->
+<div id="obrigatorio-popup" class="popup">
+  <p id="obrigatorio-msg"></p>
+  <div class="popup-buttons">
+    <button onclick="fecharPopup('obrigatorio-popup')">Fechar</button>
+  </div>
+</div>
+
+<!-- POPUP: LIMPAR CONFIRM -->
+<div id="limpar-confirm-popup" class="popup-confirm">
+  <p>⚠️ Deseja limpar <strong>todos</strong> os campos?</p>
+  <div>
+    <button class="btn-sim" onclick="confirmarLimpar()">Sim</button>
+    <button class="btn-nao" onclick="fecharPopup('limpar-confirm-popup')">Não</button>
+  </div>
+</div>
+
+<!-- POPUP: GIF INSTRUÇÃO GPS -->
+<div id="gps-gif-popup">
+  <div class="gif-title">📍 COMO COMPARTILHAR LOCALIZAÇÃO NO WHATSAPP</div>
+  <img src="instrucao_gps.jpg" alt="Tutorial GPS"
+       onerror="this.style.display='none'; document.getElementById('gif-erro').style.display='block'">
+  <div id="gif-erro">
+    📂 Coloque o arquivo <strong>instrucao_gps.jpg</strong> na mesma pasta deste HTML.
+  </div>
+  <div class="gif-instrucoes">
+    1️⃣ Abra uma conversa no WhatsApp<br>
+    2️⃣ Toque no 📎 (anexo)<br>
+    3️⃣ Selecione <strong>"Localização"</strong><br>
+    4️⃣ Toque em <strong>"Compartilhar localização atual"</strong><br>
+    5️⃣ Pressione e segure na mensagem enviada<br>
+    6️⃣ Toque em <strong>"Copiar link"</strong><br>
+    7️⃣ Volte aqui e cole no campo GPS
+  </div>
+  <button class="btn-abrir-wpp" onclick="abrirWhatsApp()">💬 ABRIR WHATSAPP</button>
+  <button class="btn-fechar-gif" onclick="fecharGifPopup()">✖ FECHAR</button>
+</div>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div class="container">
+  <h1>📋 SOLICITAÇÃO DE SERVIÇO</h1>
+  <div id="formFields">
+
+    <h2>Dados da Solicitação</h2>
+
+    <!-- ALIMENTADOR -->
+    <label>Alimentador: <span class="req">*</span></label>
+    <div class="autocomplete-wrapper">
+      <input type="text" id="alimentador" placeholder="DIGITE PARA FILTRAR..." autocomplete="off"
+             oninput="filtrarAlimentador(this)" onblur="fecharListaDelay()">
+      <div class="autocomplete-list" id="alimentador-list"></div>
+    </div>
+
+    <!-- ÁREA -->
+    <label>Área: <span class="req">*</span></label>
+    <input type="text" id="area" placeholder="DIGITE A ÁREA"
+           oninput="soMaiuscula(this); gerarMensagem()">
+
+    <!-- TRAFO / ESTRUTURA / TOMBAMENTO (campo único) -->
+    <label>Trafo / Estrutura / Tombamento: <span class="req">*</span></label>
+    <span class="label-sub">Preencha um dos três — use traço para separar se informar mais de um. Ex: TRF-01A</span>
+    <input type="text" id="trafo" placeholder="EX: TRF-01A  ou  EST-002  ou  TOMB-005" maxlength="40"
+           oninput="mascaraTrafo(this); gerarMensagem()">
+
+    <!-- TIPO DE SERVIÇO -->
+    <label>Tipo de Serviço: <span class="req">*</span></label>
+    <select id="tipoServico" onchange="gerarMensagem()">
+      <option value="">-- SELECIONE --</option>
+      <option value="MANUTENÇÃO PREVENTIVA">MANUTENÇÃO PREVENTIVA</option>
+      <option value="MANUTENÇÃO CORRETIVA">MANUTENÇÃO CORRETIVA</option>
+      <option value="INSPEÇÃO DE REDE">INSPEÇÃO DE REDE</option>
+      <option value="SUBSTITUIÇÃO DE EQUIPAMENTO">SUBSTITUIÇÃO DE EQUIPAMENTO</option>
+      <option value="LIGAÇÃO NOVA">LIGAÇÃO NOVA</option>
+      <option value="RELIGAÇÃO">RELIGAÇÃO</option>
+      <option value="OUTRO">OUTRO</option>
+    </select>
+
+    <!-- GPS -->
+    <label>GPS (link): <span class="req">*</span></label>
+    <input type="text" id="gps" placeholder="Cole aqui o link do WhatsApp ou Maps"
+           oninput="gerarMensagem()" style="text-transform:none;">
+    <button class="btn-wpp-location" onclick="abrirGifGPS()">
+      💬 VER TUTORIAL E ABRIR WHATSAPP
+    </button>
+    <span class="gps-hint">
+      Abra o WhatsApp → 📎 Anexo → Localização → Compartilhar localização atual →
+      segure na mensagem → <strong>Copiar link</strong> → cole acima
+    </span>
+
+    <!-- ENDEREÇO -->
+    <label>Endereço: <span class="req">*</span></label>
+    <input type="text" id="endereco" placeholder="RUA - BAIRRO - NUMERO" maxlength="80"
+           oninput="mascaraEndereco(this); gerarMensagem()">
+
+    <!-- EQUIPE -->
+    <label>Equipe: <span class="req">*</span></label>
+    <input type="text" id="equipe" placeholder="XXX-XX-NNX" maxlength="10"
+           oninput="aplicarMascaraLead(this); gerarMensagem()">
+
+    <!-- DESCRIÇÃO -->
+    <h2>Descrição do Serviço</h2>
+    <label>Descreva o Serviço: <span class="req">*</span></label>
+    <textarea id="descricao" placeholder="DESCREVA O QUE FOI / SERÁ REALIZADO..."
+              oninput="soMaiuscula(this); atualizarContador(); gerarMensagem()"></textarea>
+    <div id="descricao-counter" class="invalido">0 / mínimo 20 caracteres</div>
+
+    <br>
+
+    <button class="btn-toggle-modo" id="btn-modo" onclick="alternarModo()">☀️ MODO CLARO</button>
+
+    <div class="preview-section" id="preview-section">
+      <div class="preview-label">📱 Pré-Visualização da Mensagem</div>
+      <textarea id="previewBox" readonly placeholder="A mensagem aparecerá aqui..."></textarea>
+    </div>
+
+    <br>
+    <button class="button-whatsapp" onclick="enviarWhatsApp()">📲 ENVIAR SOLICITAÇÃO VIA WHATSAPP</button>
+    <br>
+    <button class="button-limpar" onclick="pedirLimpar()">🗑️ LIMPAR CAMPOS</button>
+
+  </div>
+</div>
+
+<script>
+const alimentadores = [
+  "ACP01C1","ACP01C2","ACP01C3","ACP01C4","ACP01C5","ACP01C6",
+  "AGF01I2","AGF01I8","AGF01S5",
+  "AQZ01I1","AQZ01I2","AQZ01I4","AQZ01I5","AQZ01I6","AQZ01I7","AQZ01I8",
+  "BBR01I1","BBR01I2","BBR01I3","BBR01I4","BBR01I5","BBR01I7",
+  "BJD01L1","BJD01L2","BJD01L6",
+  "BMS01S1","BMS01S2","BMS01S3","BMS01S4","BMS01S5",
+  "BRT01C1","BRT01C2","BRT01C3","BRT01C4","BRT01C5","BRT01C6",
+  "CCA01C1","CCA01C2","CCA01C3","CCA01C4","CCA01C5","CCA01C6","CCA01C7","CCA01C8","CCA01C9",
+  "CLN01F1","CLN01F2","CLN01F3","CLN01F4","CLN01F5","CLN01F6",
+  "CMB01L4","CMB01L5",
+  "CSL01C1","CSL01C2","CSL01C3","CSL01C4","CSL01C5","CSL01C7","CSL01C8","CSL01C9",
+  "DID01F1","DID01F2","DID01F4","DID01F5","DID01F7","DID01F8","DID01FA",
+  "DIF01I1","DIF01I2","DIF01I3","DIF01I4","DIF01I5","DIF01I7","DIF01I8","DIF01IA",
+  "DMC01C5","DMC01C8","DMU01M7",
+  "ESB01S1","ESB01S2","ESB01S3","ESB01S5","ESB01S6",
+  "GBA01L4","GRM01M2","GRM01M4","GRM01M5",
+  "HRZ01L2","HRZ01L7","HRZ01L8",
+  "JAB01F1","JAB01F2","JAB01F3","JAB01F4","JAB01F5","JAB01F7","JAB01F8","JAB01F9","JAB01FA",
+  "MDM01M3","MDM01M6","MDM01M8",
+  "MRG01C1","MRG01C2","MRG01C3","MRG01C4","MRG01C5","MRG01C6","MRG01C7","MRG01C8","MRG01CA",
+  "MSJ01M4","MSJ01M9","MSJ01MA",
+  "PCJ01P2","PCJ01P3","PCJ01P5","PCJ01P6","PCJ01P7","PCJ01P9",
+  "PCM01M4","PCM01M5","PCM01M7","PCM01M8",
+  "PDM01M1","PDM01M3","PDM01M8","PDM01M9","PDM01MA",
+  "PGB01P1","PGB01P3","PGB01P5",
+  "PRB01P1","PRB01P5",
+  "UMB01I1","UMB01I2"
+];
+
+const CAMPOS_IDS = ['alimentador','area','trafo','tipoServico','gps','endereco','equipe','descricao'];
+const MIN_DESCRICAO = 20;
+let modoEscuro = true;
+
+// MÁSCARAS
+function soMaiuscula(el) { el.value = el.value.toUpperCase(); }
+function mascaraTrafo(el) { el.value = el.value.toUpperCase().replace(/[^A-Z0-9\-]/g, ''); }
+function mascaraEndereco(el) { el.value = el.value.toUpperCase().replace(/[^A-Z0-9 \-]/g, ''); }
+function aplicarMascaraLead(i) {
+  let v = i.value.toUpperCase().replace(/[^A-Z0-9]/g, ''), r = '';
+  for (let x = 0; x < v.length && x < 8; x++) {
+    if (x === 3 || x === 5) r += '-';
+    r += v[x];
+  }
+  i.value = r;
+}
+
+// CONTADOR DESCRIÇÃO
+function atualizarContador() {
+  const val = document.getElementById('descricao').value.trim().length;
+  const el  = document.getElementById('descricao-counter');
+  if (val < MIN_DESCRICAO) {
+    el.textContent = `${val} / mínimo ${MIN_DESCRICAO} caracteres`;
+    el.className = 'invalido';
+  } else {
+    el.textContent = `✔ ${val} caracteres`;
+    el.className = 'valido';
+  }
+}
+
+// AUTOCOMPLETE ALIMENTADOR
+function filtrarAlimentador(input) {
+  const val = input.value.toUpperCase();
+  const lista = document.getElementById('alimentador-list');
+  lista.innerHTML = '';
+  if (!val) { lista.style.display = 'none'; return; }
+  const filtrados = alimentadores.filter(a => a.includes(val));
+  if (!filtrados.length) { lista.style.display = 'none'; return; }
+  filtrados.forEach(item => {
+    const div = document.createElement('div');
+    div.textContent = item;
+    div.onmousedown = () => selecionarAlimentador(item);
+    lista.appendChild(div);
+  });
+  lista.style.display = 'block';
+  gerarMensagem();
+}
+function selecionarAlimentador(item) {
+  document.getElementById('alimentador').value = item;
+  document.getElementById('alimentador-list').style.display = 'none';
+  gerarMensagem();
+}
+function fecharListaDelay() {
+  setTimeout(() => { document.getElementById('alimentador-list').style.display = 'none'; gerarMensagem(); }, 200);
+}
+
+// GPS / WHATSAPP
+function abrirGifGPS() {
+  document.getElementById('gps-gif-popup').style.display = 'block';
+  showOverlay();
+}
+function fecharGifPopup() {
+  document.getElementById('gps-gif-popup').style.display = 'none';
+  hideOverlay();
+}
+function abrirWhatsApp() {
+  document.getElementById('gps-gif-popup').style.display = 'none';
+  hideOverlay();
+  // Tenta abrir o app do WhatsApp diretamente
+  window.location.href = 'whatsapp://app';
+}
+
+// GERAR MENSAGEM
+function gerarMensagem() {
+  const v = id => document.getElementById(id).value.trim();
+  let msg = '*SOLICITAÇÃO DE SERVIÇO*\n';
+  msg += '━━━━━━━━━━━━━━━━━━━━\n';
+  if (v('alimentador')) msg += `*ALIMENTADOR:* ${v('alimentador')}\n`;
+  if (v('area'))        msg += `*ÁREA:* ${v('area')}\n`;
+  if (v('trafo'))       msg += `*TRAFO / ESTRUTURA / TOMBAMENTO:* ${v('trafo')}\n`;
+  if (v('tipoServico')) msg += `*TIPO DE SERVIÇO:* ${v('tipoServico')}\n`;
+  if (v('gps'))         msg += `*GPS:* ${v('gps')}\n`;
+  if (v('endereco'))    msg += `*ENDEREÇO:* ${v('endereco')}\n`;
+  if (v('equipe'))      msg += `*EQUIPE:* ${v('equipe')}\n`;
+  if (v('descricao'))   msg += `*DESCRIÇÃO:* ${v('descricao')}\n`;
+  msg += '━━━━━━━━━━━━━━━━━━━━';
+  document.getElementById('previewBox').value = msg;
+}
+
+// MODO ESCURO/CLARO
+function alternarModo() {
+  modoEscuro = !modoEscuro;
+  const box     = document.getElementById('previewBox');
+  const section = document.getElementById('preview-section');
+  const btn     = document.getElementById('btn-modo');
+  if (modoEscuro) {
+    box.classList.remove('modo-claro');
+    section.classList.remove('modo-claro');
+    btn.classList.remove('claro');
+    btn.textContent = '☀️ MODO CLARO';
+  } else {
+    box.classList.add('modo-claro');
+    section.classList.add('modo-claro');
+    btn.classList.add('claro');
+    btn.textContent = '🌙 MODO ESCURO';
+  }
+}
+
+// VALIDAÇÃO
+function verificarCampos() {
+  const obrigatorios = [
+    { id: 'alimentador', label: '📡 ALIMENTADOR' },
+    { id: 'area',        label: '🗺️ ÁREA' },
+    { id: 'trafo',       label: '🔌 TRAFO / ESTRUTURA / TOMBAMENTO' },
+    { id: 'tipoServico', label: '🔧 TIPO DE SERVIÇO' },
+    { id: 'gps',         label: '📍 GPS (link)' },
+    { id: 'endereco',    label: '🏠 ENDEREÇO' },
+    { id: 'equipe',      label: '👷 EQUIPE' },
+    { id: 'descricao',   label: '📝 DESCRIÇÃO DO SERVIÇO' },
+  ];
+  const faltando = obrigatorios.filter(f => !document.getElementById(f.id).value.trim());
+  if (faltando.length) {
+    document.getElementById('obrigatorio-msg').innerHTML =
+      'PREENCHA OS CAMPOS OBRIGATÓRIOS 🚨<br><br>' + faltando.map(f => f.label).join('<br>');
+    document.getElementById('obrigatorio-popup').style.display = 'block';
+    showOverlay();
+    return false;
+  }
+  if (document.getElementById('descricao').value.trim().length < MIN_DESCRICAO) {
+    document.getElementById('obrigatorio-msg').innerHTML =
+      `⚠️ DESCRIÇÃO muito curta!<br>Mínimo ${MIN_DESCRICAO} caracteres.`;
+    document.getElementById('obrigatorio-popup').style.display = 'block';
+    showOverlay();
+    return false;
+  }
+  if (document.getElementById('equipe').value.trim().length < 8) {
+    document.getElementById('obrigatorio-msg').innerHTML =
+      '⚠️ EQUIPE incompleta!<br>Formato: XXX-XX-NNX<br>Ex: ABC-DE-12F';
+    document.getElementById('obrigatorio-popup').style.display = 'block';
+    showOverlay();
+    return false;
+  }
+  return true;
+}
+
+// WHATSAPP ENVIO
+function enviarWhatsApp() {
+  if (!verificarCampos()) return;
+  gerarMensagem();
+  window.open(`https://wa.me/?text=${encodeURIComponent(document.getElementById('previewBox').value)}`, '_blank');
+}
+
+// LIMPAR
+function pedirLimpar() {
+  document.getElementById('limpar-confirm-popup').style.display = 'block';
+  showOverlay();
+}
+function confirmarLimpar() {
+  fecharPopup('limpar-confirm-popup');
+  CAMPOS_IDS.forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('previewBox').value = '';
+  atualizarContador();
+}
+
+// NOVO / MANTER
+function novoPreenchimento() { confirmarLimpar(); fecharPopup('novo-popup'); }
+function manterDados()       { fecharPopup('novo-popup'); gerarMensagem(); }
+
+// OVERLAY
+function showOverlay() { document.getElementById('popupOverlay').style.display = 'block'; }
+function hideOverlay() { document.getElementById('popupOverlay').style.display = 'none'; }
+function fecharPopup(id) { document.getElementById(id).style.display = 'none'; hideOverlay(); }
+
+// INIT
+window.onload = function() {
+  document.getElementById('novo-popup').style.display = 'block';
+  showOverlay();
+  atualizarContador();
+  document.querySelectorAll('#formFields input, #formFields select, #formFields textarea').forEach(el => {
+    el.addEventListener('input',  gerarMensagem);
+    el.addEventListener('change', gerarMensagem);
+  });
+};
+</script>
+</body>
+</html>
