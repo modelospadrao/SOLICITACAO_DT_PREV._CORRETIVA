@@ -15,14 +15,13 @@
       width: 94%;
       max-width: 480px;
       margin: auto;
-      padding-bottom: 40px;
+      padding-bottom: 36px;
     }
     h1 {
-      color: #e63946;
-      font-size: 20px;
+      color: #000000;
+      font-size: 30px;
       text-align: center;
       margin: 18px 0 6px 0;
-      border-bottom: 4px solid #e63946;
       padding-bottom: 6px;
       letter-spacing: 1px;
     }
@@ -51,21 +50,21 @@
     }
     input[type="text"], select, textarea {
       width: 100%;
-      padding: 9px;
+      padding: 15px;
       margin: 2px 0 6px 0;
       font-size: 14px;
       border: 1px solid #ddd;
       text-transform: uppercase;
       background-color: #f0f0f0;
       box-sizing: border-box;
-      border-radius: 3px;
+      border-radius: 17px;
       font-family: Cambria, Cochin, Georgia, Times, sans-serif;
     }
     select { appearance: auto; }
     #gps { text-transform: none; }
 
     /* Descrição */
-    #descricao, #retorno { min-height: 90px; resize: vertical; }
+    #descricao, #retorno { min-height: 119px; resize: vertical; }
     .campo-counter {
       font-size: 11px; color: #888;
       text-align: right; margin: -4px 0 6px 0;
@@ -76,10 +75,10 @@
     /* Preview */
     #previewBox {
       width: 100%; min-height: 200px;
-      padding: 12px; margin: 8px 0;
+      padding: 12px; margin: 9px 0;
       font-size: 13px;
       border: 2px solid #333;
-      background-color: #111; color: #fff;
+      background-color: #000000; color: #fff;
       box-sizing: border-box; border-radius: 6px;
       white-space: pre-wrap; font-family: monospace;
       resize: vertical; text-transform: uppercase;
@@ -87,23 +86,26 @@
     }
     #previewBox.modo-claro {
       background-color: #ffffff; color: #000;
-      border-color: #222;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+      border-color: #ccc;
+      box-shadow: none;
+      background-image: none;
+      line-height: normal;
     }
     .preview-section {
-      border: 2px solid #333; border-radius: 8px;
-      padding: 10px; background: #1a1a1a; margin-top: 10px;
+      border: 1px solid #b4b4b4; border-radius: 8px;
+      padding: 10px; background: #f5f0eb; margin-top: 10px;
       transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
     .preview-section.modo-claro {
-      border-color: #222; background: #ffffff;
-      box-shadow: 0 3px 14px rgba(0,0,0,0.22);
+      border-color: #c9b99a;
+      background: #f5f0eb;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
     .preview-label {
-      font-size: 13px; font-weight: bold; text-transform: uppercase;
-      margin: 0 0 6px 0; color: #aaa;
+      font-size: 15px; font-weight: bold; text-transform: uppercase;
+      margin: 0 0 6px 0; color: #ff9100;
     }
-    .preview-section.modo-claro .preview-label { color: #111; }
+    .preview-section.modo-claro .preview-label { color: #ff9100; }
 
     .btn-toggle-modo {
       background: #333; color: #fff; border: none;
@@ -144,7 +146,7 @@
     /* Divisória entre seções de envio */
     .divisoria-envio {
       border: none; border-top: 3px dashed #ccc;
-      margin: 20px 0 14px 0;
+      margin: 20px 0 21px 0;
     }
     .envio-titulo {
       font-size: 13px; font-weight: bold; text-transform: uppercase;
@@ -258,6 +260,89 @@
       border-top: 1px solid #ddd;
     }
 
+    /* Botões tipo trafo */
+    .trafo-btns {
+      display: flex; gap: 6px; margin: 4px 0 6px 0;
+      justify-content: center;
+    }
+    .btn-tipo-trafo {
+      flex: 1; padding: 10px 4px; font-size: 12px; font-weight: bold;
+      border: 2px solid #aaa; border-radius: 6px;
+      background: #f0f0f0; color: #555; cursor: pointer;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+      transition: all 0.2s ease;
+      text-align: center;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn-tipo-trafo.selecionado {
+      background: #000; color: #fff; border-color: #000;
+    }
+
+    /* Botões SIM / NÃO */
+    .simn-grupo {
+      display: flex; align-items: center; justify-content: space-between;
+      margin: 8px 0 4px 0; gap: 10px;
+    }
+    .simn-label {
+      font-size: 13px; font-weight: bold; text-transform: uppercase;
+      flex: 1;
+    }
+    .simn-btns {
+      display: flex; gap: 6px;
+    }
+    .btn-sim-nao {
+      padding: 8px 18px; font-size: 13px; font-weight: bold;
+      border: 2px solid #aaa; border-radius: 6px;
+      background: #f0f0f0; color: #555; cursor: pointer;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+      transition: all 0.2s ease;
+      min-width: 70px;
+    }
+    .btn-sim-nao.selecionado-sim {
+      background: #1b5e20; color: #fff; border-color: #1b5e20;
+    }
+    .btn-sim-nao.selecionado-nao {
+      background: #b71c1c; color: #fff; border-color: #b71c1c;
+    }
+
+    /* Botões tipo serviço */
+    .servico-btns {
+      display: flex; gap: 6px; margin: 4px 0 2px 0;
+      justify-content: center;
+    }
+    .btn-tipo-serv {
+      flex: 1; padding: 10px 4px; font-size: 12px; font-weight: bold;
+      border: 2px solid #aaa; border-radius: 6px;
+      background: #f0f0f0; color: #555; cursor: pointer;
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif;
+      transition: all 0.2s ease;
+      text-align: center;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn-tipo-serv.selecionado {
+      background: #000; color: #fff; border-color: #000;
+    }
+
+    /* Caixa tipo serviço integrada */
+    .servico-box {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      background-color: #f0f0f0;
+      margin: 2px 0 6px 0;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .servico-box select {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #ddd;
+      background: transparent;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
     #equipe { letter-spacing: 2px; font-weight: bold; }
     span.req { color: #e63946; }
   </style>
@@ -322,40 +407,49 @@
 
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="container">
-  <h1>📋 SOLICITAÇÃO DE SERVIÇO</h1>
+  <h1>📋 SOLICITAÇÃO DE SERVIÇO DT</h1>
   <div id="formFields">
 
-    <h2>Dados da Solicitação</h2>
+    <h2>📋 Dados da Solicitação</h2>
 
-    <label>Alimentador: <span class="req">*</span></label>
+    <label>📡 Alimentador: <span class="req">*</span></label>
     <div class="autocomplete-wrapper">
       <input type="text" id="alimentador" placeholder="DIGITE PARA FILTRAR..." autocomplete="off"
              oninput="filtrarAlimentador(this)" onblur="fecharListaDelay()">
       <div class="autocomplete-list" id="alimentador-list"></div>
     </div>
 
-    <label>Municipio / Bairro: <span class="req">*</span></label>
+    <label>🗺️ Municipio / Bairro: <span class="req">*</span></label>
     <input type="text" id="area" placeholder="DIGITE A ÁREA"
            oninput="soMaiuscula(this); gerarMensagem()">
 
-    <label>Trafo / Estrutura / Tombamento: <span class="req">*</span></label>
-    <span class="label-sub">Preencha um dos três — separe com traço se informar mais de um. Ex: TRF-01A</span>
-    <input type="text" id="trafo" placeholder="EX: TRF-01A  ou  EST-002  ou  TOMB-005" maxlength="40"
-           oninput="mascaraTrafo(this); gerarMensagem()">
+    <label>🔢 Número da DT: <span class="req">*</span></label>
+    <span class="label-sub">Solicitar N° Operador, quando criado! Exatamente 10 caracteres</span>
+    <input type="text" id="dt" placeholder="DIGITE OS 10 CARACTERES" maxlength="10"
+           oninput="soMaiuscula(this); atualizarContadorDT(); gerarMensagem()">
+    <div id="dt-counter" class="campo-counter invalido">0 / 10 caracteres</div>
 
-    <label>Tipo de Serviço: <span class="req">*</span></label>
-    <select id="tipoServico" onchange="gerarMensagem()">
-      <option value="">-- SELECIONE --</option>
-      <option value="MANUTENÇÃO PREVENTIVA">MANUTENÇÃO PREVENTIVA</option>
-      <option value="MANUTENÇÃO CORRETIVA">MANUTENÇÃO CORRETIVA</option>
-      <option value="INSPEÇÃO DE REDE">INSPEÇÃO DE REDE</option>
-      <option value="SUBSTITUIÇÃO DE EQUIPAMENTO">SUBSTITUIÇÃO DE EQUIPAMENTO</option>
-      <option value="LIGAÇÃO NOVA">LIGAÇÃO NOVA</option>
-      <option value="RELIGAÇÃO">RELIGAÇÃO</option>
-      <option value="OUTRO">OUTRO</option>
-    </select>
+    <label>🔌 DESCREVER NÚMERO DO CODIGO: <span class="req">*</span></label>
+    <span class="label-sub">Selecione o tipo e digite o código abaixo</span>
+    <div class="trafo-btns">
+      <button type="button" id="btn-trafo"      class="btn-tipo-trafo" onclick="selecionarTipoTrafo('TRAFO',      this)">⚡TRAFO</button>
+      <button type="button" id="btn-estrutura"  class="btn-tipo-trafo" onclick="selecionarTipoTrafo('ESTRUTURA',  this)">⚡ESTRUTURA</button>
+      <button type="button" id="btn-tombamento" class="btn-tipo-trafo" onclick="selecionarTipoTrafo('TOMBAMENTO', this)">⚡TOMBAMENTO</button>
+    </div>
+    <input type="text" id="trafo" placeholder="DIGITE O CÓDIGO" maxlength="40"
+           oninput="mascaraTrafoPlus(this); gerarMensagem()">
 
-    <label>GPS (link): <span class="req">*</span></label>
+    <label>🔧 Tipo de Serviço: <span class="req">*</span></label>
+    <div class="servico-btns">
+      <button type="button" id="btn-prev"  class="btn-tipo-serv" onclick="selecionarServico('MANUTENÇÃO PREVENTIVA', this)">🛡️ PREVENTIVA</button>
+      <button type="button" id="btn-corr"  class="btn-tipo-serv" onclick="selecionarServico('MANUTENÇÃO CORRETIVA',  this)">🔨 CORRETIVA</button>
+      <button type="button" id="btn-insp"  class="btn-tipo-serv" onclick="selecionarServico('INSPEÇÃO ENTORNO ALIMENTADORES', this)">👁️ INSPEÇÃO</button>
+      <button type="button" id="btn-mano"  class="btn-tipo-serv" onclick="selecionarServico('MANOBRAS', this)">🔀 MANOBRAS</button>
+    </div>
+    <div id="desc-servico" style="display:none; margin: 2px 0 6px 0; padding: 8px 10px; font-size: 12px; font-style: italic; color: #555; background:#f0f0f0; border-radius:4px; border-left: 3px solid #e63946;"></div>
+    <input type="hidden" id="tipoServico">
+
+    <label>📍 GPS (link): <span class="req">*</span></label>
     <input type="text" id="gps" placeholder="Cole aqui o link copiado do Maps"
            oninput="gerarMensagem()" style="text-transform:none;">
     <button class="btn-gps" onclick="abrirGifGPS()">
@@ -366,19 +460,76 @@
       toque na sua localização → <strong>Compartilhar → Copiar link</strong> → cole acima
     </span>
 
-    <label>Endereço: <span class="req">*</span></label>
+    <label>🏠 Endereço: <span class="req">*</span></label>
     <input type="text" id="endereco" placeholder="RUA - BAIRRO - NUMERO" maxlength="80"
            oninput="mascaraEndereco(this); gerarMensagem()">
 
-    <label>Equipe: <span class="req">*</span></label>
+    <label>👷 Equipe: <span class="req">*</span></label>
     <input type="text" id="equipe" placeholder="XXX-XX-NNX" maxlength="10"
            oninput="aplicarMascaraLead(this); gerarMensagem()">
 
-    <h2>Descrição do Serviço</h2>
-    <label>Descreva o Serviço: <span class="req">*</span></label>
-    <textarea id="descricao" placeholder="DESCREVA O QUE SERÁ REALIZADO..."
+    <h2>✏️ Descrição do Serviço</h2>
+    <label>📝 Descreva o Serviço: <span class="req">*</span></label>
+    <textarea id="descricao" placeholder="DESCREVA O QUE SERÁ REALIZADO PRÉ ANALISE A BAIXA DA EXECUÇÃO DEVERA SER INSERIDA POSTERIORMENTE NO EORDER..."
               oninput="soMaiuscula(this); atualizarContador('descricao','desc-counter'); gerarMensagem()"></textarea>
     <div id="desc-counter" class="campo-counter invalido">0 / mínimo 20 caracteres</div>
+
+    <label>⚠️ Causa IDENTIFICADA: <span class="req">*</span></label>
+    <div class="servico-box">
+      <select id="causa" onchange="gerarMensagem(); mostrarDescCausa()" style="border:none; background:transparent; margin:0; border-radius:0; border-bottom: 1px solid #ddd;">
+        <option value="">-- SELECIONE --</option>
+        <option value="ÁRVORE TOMBADA">ÁRVORE TOMBADA</option>
+        <option value="BORNE FUNDIDO">BORNE FUNDIDO</option>
+        <option value="CHUVA">CHUVA</option>
+        <option value="CONDUTOR PARTIDO">CONDUTOR PARTIDO</option>
+        <option value="DEFEITO EM CHAVE FUSÍVEL">DEFEITO EM CHAVE FUSÍVEL</option>
+        <option value="DEFEITO EM CONCENTRADOR - REDE DAT">DEFEITO EM CONCENTRADOR - REDE DAT</option>
+        <option value="DEFEITO EM CONEXÃO">DEFEITO EM CONEXÃO</option>
+        <option value="DEFEITO EM CONEXÃO DE MEDIDOR">DEFEITO EM CONEXÃO DE MEDIDOR</option>
+        <option value="DEFEITO EM ISOLADOR">DEFEITO EM ISOLADOR</option>
+        <option value="DEFEITO EM MEDIDOR">DEFEITO EM MEDIDOR</option>
+        <option value="DEFEITO EM RAMAL CONCÊNTRICO">DEFEITO EM RAMAL CONCÊNTRICO</option>
+        <option value="DEFEITO EM RAMAL DE LIGAÇÃO">DEFEITO EM RAMAL DE LIGAÇÃO</option>
+        <option value="DEFEITO EM TRANSFORMADOR">DEFEITO EM TRANSFORMADOR</option>
+        <option value="DEFEITO INTERNO CLIENTE">DEFEITO INTERNO CLIENTE</option>
+        <option value="DEFEITO NO DISJUNTOR NO TRAFO">DEFEITO NO DISJUNTOR NO TRAFO</option>
+        <option value="DEGRADAÇÃO MATERIAL">DEGRADAÇÃO MATERIAL</option>
+        <option value="FALTA DE SELO">FALTA DE SELO</option>
+        <option value="JUMP PARTIDO">JUMP PARTIDO</option>
+        <option value="PADRÃO QUEBRADO">PADRÃO QUEBRADO</option>
+        <option value="PIPA">PIPA</option>
+        <option value="POSTE ABALROADO">POSTE ABALROADO</option>
+        <option value="PÁSSARO">PÁSSARO</option>
+        <option value="RAMAL DE LIGAÇÃO SUBSTITUÍDO">RAMAL DE LIGAÇÃO SUBSTITUÍDO</option>
+        <option value="ROUBO">ROUBO</option>
+        <option value="SOBRECARGA">SOBRECARGA</option>
+        <option value="SUSPEITA DE FRAUDE">SUSPEITA DE FRAUDE</option>
+        <option value="TCTP AVARIADO">TCTP AVARIADO</option>
+        <option value="TERCEIROS ACIDENTAL">TERCEIROS ACIDENTAL</option>
+        <option value="VANDALISMO">VANDALISMO</option>
+        <option value="VEGETAÇÃO">VEGETAÇÃO</option>
+        <option value="VENTO">VENTO</option>
+        </select>
+      <div id="desc-causa" style="display:none; padding: 8px 10px 4px 10px; font-size: 12px; font-style: italic; color: #555; border-top: 1px solid #e0e0e0;"></div>
+    </div>
+
+    <div class="simn-grupo">
+      <div class="simn-label">📋 REALIZADO PRÉ APR: <span class="req">*</span></div>
+      <div class="simn-btns">
+        <button type="button" class="btn-sim-nao btn-sim-op" id="preApr-sim" onclick="selecionarSimNao('preApr','SIM',this)">✅ SIM</button>
+        <button type="button" class="btn-sim-nao btn-nao-op" id="preApr-nao" onclick="selecionarSimNao('preApr','NÃO',this)">❌ NÃO</button>
+      </div>
+    </div>
+    <input type="hidden" id="preApr">
+
+    <div class="simn-grupo">
+      <div class="simn-label">⚙️ REALIZADO 5R0: <span class="req">*</span></div>
+      <div class="simn-btns">
+        <button type="button" class="btn-sim-nao btn-sim-op" id="r5ro-sim" onclick="selecionarSimNao('r5ro','SIM',this)">✅ SIM</button>
+        <button type="button" class="btn-sim-nao btn-nao-op" id="r5ro-nao" onclick="selecionarSimNao('r5ro','NÃO',this)">❌ NÃO</button>
+      </div>
+    </div>
+    <input type="hidden" id="r5ro">
 
     <br>
     <button class="btn-toggle-modo" id="btn-modo" onclick="alternarModo()">☀️ MODO CLARO</button>
@@ -390,7 +541,6 @@
 
     <!-- ══════════ ENVIO SOLICITAÇÃO ══════════ -->
     <hr class="divisoria-envio">
-    <p class="envio-titulo">📤 Enviar Solicitação</p>
     <button class="button-whatsapp-solicitacao" onclick="enviarSolicitacao()">
       📲 ENVIAR SOLICITAÇÃO VIA WHATSAPP
     </button>
@@ -441,19 +591,117 @@ const alimentadores = [
   "UMB01I1","UMB01I2"
 ];
 
-const CAMPOS_IDS = ['alimentador','area','trafo','tipoServico','gps','endereco','equipe','descricao'];
+const CAMPOS_IDS = ['alimentador','area','dt','trafo','tipoServico','causa','gps','endereco','equipe','preApr','r5ro','descricao'];
 const MIN_CHARS  = 20;
 let modoEscuro   = true;
+let tipoTrafoSel = ''; // 'TRAFO' | 'ESTRUTURA' | 'TOMBAMENTO'
+
+// ── TIPO SERVIÇO BOTÕES ────────────────────────────────────
+function selecionarServico(tipo, btn) {
+  document.getElementById('tipoServico').value = tipo;
+  document.querySelectorAll('.btn-tipo-serv').forEach(b => b.classList.remove('selecionado'));
+  btn.classList.add('selecionado');
+  const descricoes = {
+    'MANUTENÇÃO PREVENTIVA':         '🛡️ A equipe realizará serviço preventivo para evitar futuros problemas na rede elétrica.',
+    'MANUTENÇÃO CORRETIVA':          '🔨 A equipe corrigirá problemas visuais já identificados na rede elétrica.',
+    'INSPEÇÃO ENTORNO ALIMENTADORES':'👁️ A equipe inspecionará o entorno para localizar pontos que necessitam de manutenção preventiva ou corretiva.',
+    'MANOBRAS':                      '🔀 A equipe realizará manobras na rede elétrica conforme programação.'
+  };
+  const box = document.getElementById('desc-servico');
+  box.textContent = descricoes[tipo] || '';
+  box.style.display = 'block';
+  gerarMensagem();
+}
+
+// ── DESCRIÇÃO CAUSA ────────────────────────────────────────
+function mostrarDescCausa() {
+  const val = document.getElementById('causa').value;
+  const box = document.getElementById('desc-causa');
+  const desc = {
+    'I A0 — BORNE FUNDIDO':                      '🔥 Derretimento do ponto de conexão elétrica por aquecimento excessivo. Provoca mau contato ou interrupção do fornecimento.',
+    'A 35 — CHUVA':                              '🌧️ Interferência causada por chuva intensa ou umidade na rede. Pode provocar curtos, fugas de corrente ou desligamentos.',
+    'E 62 — CONDUTOR PARTIDO':                   '⚡ Cabo da rede elétrica rompido ou quebrado. Interrompe o fornecimento e oferece risco de segurança.',
+    'I 60 — DEFEITO EM CHAVE FUSÍVEL':           '🔌 Falha mecânica ou elétrica na chave fusível da rede. Impede funcionamento correto da proteção.',
+    'E 89 — DEFEITO EM CONCENTRADOR - REDE DAT': '📡 Problema em equipamento de comunicação ou telemedição da rede. Pode afetar monitoramento e operação remota.',
+    'I 50 — DEFEITO EM CONEXÃO':                 '🔗 Mau contato em emendas, terminais ou conexões elétricas. Gera aquecimento, oscilações ou interrupção de energia.',
+    'I 34 — DEFEITO EM CONEXÃO DE MEDIDOR':      '🔗 Problema nas ligações elétricas do medidor do cliente. Pode causar falha no fornecimento ou leitura incorreta.',
+    'A 31 — DEFEITO EM ISOLADOR':                '🧱 Isolador danificado ou contaminado perde sua função de isolamento. Pode causar fuga de corrente e desligamentos.',
+    'I 32 — DEFEITO EM MEDIDOR':                 '📟 Falha interna no equipamento de medição de energia. Afeta funcionamento ou registro do consumo.',
+    'I 27 — DEFEITO EM RAMAL CONCÊNTRICO':       '🔌 Dano no cabo de ligação do cliente até a rede. Pode causar queda ou oscilação de energia.',
+    'I 49 — DEFEITO EM RAMAL DE LIGAÇÃO':        '🔌 Problema no cabo que conecta o imóvel à rede elétrica. Provoca interrupção parcial ou total do fornecimento.',
+    'I 82 — DEFEITO EM TRANSFORMADOR':           '⚙️ Falha interna ou externa no transformador de energia. Afeta diretamente o fornecimento da área atendida.',
+    'E 51 — DEFEITO INTERNO CLIENTE':            '🏠 Problema nas instalações elétricas internas do imóvel. Não relacionado à rede da concessionária.',
+    'I 54 — DEFEITO NO DISJUNTOR NO TRAFO':      '⚙️ Falha no disjuntor de proteção do transformador. Pode causar desligamentos frequentes.',
+    'I 01 — DEGRADAÇÃO MATERIAL':                '📉 Desgaste natural de componentes por tempo de uso ou condições ambientais. Reduz eficiência e pode gerar falhas.',
+    'I X4 — FALTA DE SELO':                      '🔏 Equipamento encontrado sem lacre de segurança. Indica possível violação ou irregularidade.',
+    'A 32 — JUMP PARTIDO':                       '⚡ Cabo de interligação rompido na rede elétrica. Interrompe a continuidade do circuito.',
+    'I A3 — PADRÃO QUEBRADO':                    '🏗️ Estrutura do padrão do cliente danificada. Compromete segurança e fornecimento.',
+    'E B2 — PIPA':                               '🪁 Linha de pipa presa na rede elétrica causando curto ou desligamento.',
+    'E 68 — POSTE ABALROADO':                    '🚗 Poste atingido por veículo ou impacto externo. Pode causar risco estrutural e interrupção.',
+    'E 22 — PÁSSARO':                            '🐦 Contato de animal com a rede elétrica provocando curto-circuito.',
+    'I 38 — RAMAL DE LIGAÇÃO SUBSTITUÍDO':       '🔄 Troca do cabo de ligação devido defeito identificado. Fornecimento normalizado após substituição.',
+    'E 40 — ROUBO':                              '🚨 Furto de cabos ou equipamentos da rede elétrica. Provoca interrupção e risco à segurança.',
+    'I 11 — SOBRECARGA':                         '⚠️ Consumo acima da capacidade do equipamento ou circuito. Proteções atuam para evitar danos.',
+    'I X3 — SUSPEITA DE FRAUDE':                 '🔍 Indícios de intervenção irregular na medição de energia. Necessita verificação técnica.',
+    'I A4 — TCTP AVARIADO':                      '📟 Equipamento de medição/proteção danificado. Pode afetar leitura ou operação da rede.',
+    'E 61 — TERCEIROS ACIDENTAL':                '🦺 Dano causado por terceiros durante obras ou atividades externas.',
+    'E 67 — VANDALISMO':                         '🔨 Danos intencionais à rede ou equipamentos elétricos.',
+    'I 13 — VEGETAÇÃO':                          '🌿 Galhos ou árvores em contato com a rede elétrica. Podem causar curto ou desligamentos.',
+    'I 42 — VENTO':                              '💨 Ação de ventos fortes movimentando cabos ou objetos contra a rede.',
+    'E 23 — ÁRVORE TOMBADA':                     '🌳 Queda de árvore sobre a rede elétrica. Provoca interrupção e risco estrutural.'
+  };
+  if (val && desc[val]) {
+    box.textContent = desc[val];
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+// ── SIM / NÃO ──────────────────────────────────────────────
+function selecionarSimNao(campo, valor, btn) {
+  document.getElementById(campo).value = valor;
+  // Remove seleção dos dois botões do grupo
+  document.getElementById(campo+'-sim').classList.remove('selecionado-sim','selecionado-nao');
+  document.getElementById(campo+'-nao').classList.remove('selecionado-sim','selecionado-nao');
+  // Marca o clicado
+  if (valor === 'SIM') btn.classList.add('selecionado-sim');
+  else                 btn.classList.add('selecionado-nao');
+  gerarMensagem();
+}
+
+// ── TIPO TRAFO BOTÕES ──────────────────────────────────────
+function selecionarTipoTrafo(tipo, btn) {
+  tipoTrafoSel = tipo;
+  document.querySelectorAll('.btn-tipo-trafo').forEach(b => b.classList.remove('selecionado'));
+  btn.classList.add('selecionado');
+  gerarMensagem();
+}
 
 // ── MÁSCARAS ──────────────────────────────────────────────
 function soMaiuscula(el) { el.value = el.value.toUpperCase(); }
-function mascaraTrafo(el) { el.value = el.value.toUpperCase().replace(/[^A-Z0-9\-]/g, ''); }
+function mascaraTrafoPlus(el) { el.value = el.value.toUpperCase().replace(/[^A-Z0-9\-\+]/g, ''); }
 function mascaraEndereco(el) { el.value = el.value.toUpperCase().replace(/[^A-Z0-9 \-]/g, ''); }
 function aplicarMascaraLead(i) {
-  let v = i.value.toUpperCase().replace(/[^A-Z0-9]/g, ''), r = '';
-  for (let x = 0; x < v.length && x < 8; x++) {
-    if (x === 3 || x === 5) r += '-';
-    r += v[x];
+  const raw = i.value.toUpperCase();
+  // Remove tudo exceto letras e números para processar posição a posição
+  const chars = raw.replace(/[^A-Z0-9]/g, '');
+  let r = '';
+  for (let x = 0; x < chars.length && r.replace(/-/g,'').length < 8; x++) {
+    const pos = r.replace(/-/g,'').length; // posição lógica 0-7
+    const c   = chars[x];
+    // posições 0,1,2 → letra; 3,4 → letra; 5,6 → número; 7 → letra
+    if (pos < 3) {
+      if (/[A-Z]/.test(c)) r += c; // só letra
+    } else if (pos < 5) {
+      if (r.length === 3) r += '-';
+      if (/[A-Z]/.test(c)) r += c;
+    } else if (pos < 7) {
+      if (r.length === 6) r += '-';
+      if (/[0-9]/.test(c)) r += c;
+    } else {
+      if (/[A-Z]/.test(c)) r += c;
+    }
   }
   i.value = r;
 }
@@ -471,7 +719,18 @@ function atualizarContador(fieldId, counterId) {
   }
 }
 
-// ── AUTOCOMPLETE ──────────────────────────────────────────
+// ── CONTADOR DT ───────────────────────────────────────────
+function atualizarContadorDT() {
+  const val = document.getElementById('dt').value.trim().length;
+  const el  = document.getElementById('dt-counter');
+  if (val < 10) {
+    el.textContent = `${val} / 10 caracteres`;
+    el.className = 'campo-counter invalido';
+  } else {
+    el.textContent = `✔ 10 / 10 caracteres`;
+    el.className = 'campo-counter valido';
+  }
+}
 function filtrarAlimentador(input) {
   const val = input.value.toUpperCase();
   const lista = document.getElementById('alimentador-list');
@@ -522,15 +781,20 @@ function abrirMaps() {
 // ── GERAR MENSAGEM SOLICITAÇÃO ─────────────────────────────
 function gerarMensagem() {
   const v = id => document.getElementById(id).value.trim();
-  let msg = '*SOLICITAÇÃO DE SERVIÇO*\n';
+  let msg = '*SOLICITAÇÃO DE SERVIÇO DT*\n';
   msg += '━━━━━━━━━━━━━\n';
   if (v('alimentador')) msg += `*ALIMENTADOR:* ${v('alimentador')}\n`;
-  if (v('area'))        msg += `*ÁREA:* ${v('area')}\n`;
-  if (v('trafo'))       msg += `*TRAFO / ESTRUTURA / TOMBAMENTO:* ${v('trafo')}\n`;
+  if (v('area'))        msg += `*MUNICÍPIO / BAIRRO:* ${v('area')}\n`;
+  if (v('dt'))          msg += `*Nº DT:* ${v('dt')}\n`;
+  const labelTrafo = tipoTrafoSel || 'TRAFO / ESTRUTURA / TOMBAMENTO';
+  if (v('trafo'))       msg += `*${labelTrafo}:* ${v('trafo')}\n`;
   if (v('tipoServico')) msg += `*TIPO DE SERVIÇO:* ${v('tipoServico')}\n`;
+  if (v('causa'))       msg += `*CAUSA:* ${v('causa')}\n`;
   if (v('gps'))         msg += `*GPS:* ${v('gps')}\n`;
   if (v('endereco'))    msg += `*ENDEREÇO:* ${v('endereco')}\n`;
   if (v('equipe'))      msg += `*EQUIPE:* ${v('equipe')}\n`;
+  if (v('preApr'))      msg += `*PRÉ APR:* ${v('preApr')}\n`;
+  if (v('r5ro'))        msg += `*REALIZADO 5R0:* ${v('r5ro')}\n`;
   if (v('descricao'))   msg += `*DESCRIÇÃO:* ${v('descricao')}\n`;
   msg += '━━━━━━━━━━━━━';
   document.getElementById('previewBox').value = msg;
@@ -561,17 +825,29 @@ function alternarModo() {
 function verificarSolicitacao() {
   const obrigatorios = [
     { id: 'alimentador', label: '📡 ALIMENTADOR' },
-    { id: 'area',        label: '🗺️ ÁREA' },
-    { id: 'trafo',       label: '🔌 TRAFO / ESTRUTURA / TOMBAMENTO' },
+    { id: 'area',        label: '🗺️ MUNICÍPIO / BAIRRO' },
+    { id: 'dt',          label: '🔢 NÚMERO DA DT' },
+    { id: 'trafo',       label: '🔌 TRAFO / ESTRUTURA / TOMBAMENTO (selecione o tipo e digite o código)' },
     { id: 'tipoServico', label: '🔧 TIPO DE SERVIÇO' },
+    { id: 'causa',       label: '⚠️ CAUSA' },
     { id: 'gps',         label: '📍 GPS (link)' },
     { id: 'endereco',    label: '🏠 ENDEREÇO' },
     { id: 'equipe',      label: '👷 EQUIPE' },
+    { id: 'preApr',      label: '📋 PRÉ APR (SIM ou NÃO)' },
+    { id: 'r5ro',        label: '⚙️ REALIZADO 5R0 (SIM ou NÃO)' },
     { id: 'descricao',   label: '📝 DESCRIÇÃO DO SERVIÇO' },
   ];
   const faltando = obrigatorios.filter(f => !document.getElementById(f.id).value.trim());
+  if (!tipoTrafoSel && document.getElementById('trafo').value.trim()) {
+    mostrarErro('⚠️ Selecione o tipo:<br>⚡ TRAFO, 🏗️ ESTRUTURA ou 🏷️ TOMBAMENTO');
+    return false;
+  }
   if (faltando.length) {
     mostrarErro('PREENCHA OS CAMPOS OBRIGATÓRIOS 🚨<br><br>' + faltando.map(f => f.label).join('<br>'));
+    return false;
+  }
+  if (document.getElementById('dt').value.trim().length < 10) {
+    mostrarErro('⚠️ Nº DA DT incompleto!<br>Obrigatório exatamente <strong>10 caracteres</strong>.');
     return false;
   }
   if (document.getElementById('descricao').value.trim().length < MIN_CHARS) {
@@ -613,6 +889,14 @@ function confirmarLimpar() {
   CAMPOS_IDS.forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('previewBox').value = '';
   atualizarContador('descricao', 'desc-counter');
+  // Reset botões trafo
+  tipoTrafoSel = '';
+  document.querySelectorAll('.btn-tipo-trafo').forEach(b => b.classList.remove('selecionado'));
+  document.querySelectorAll('.btn-tipo-serv').forEach(b => b.classList.remove('selecionado'));
+  document.querySelectorAll('.btn-sim-nao').forEach(b => b.classList.remove('selecionado-sim','selecionado-nao'));
+  document.getElementById('desc-servico').style.display = 'none';
+  document.getElementById('desc-causa').style.display = 'none';
+  atualizarContadorDT();
 }
 
 // ── NOVO / MANTER ──────────────────────────────────────────
@@ -629,6 +913,7 @@ window.onload = function() {
   document.getElementById('novo-popup').style.display = 'block';
   showOverlay();
   atualizarContador('descricao', 'desc-counter');
+  atualizarContadorDT();
   document.querySelectorAll('#formFields input, #formFields select, #formFields textarea').forEach(el => {
     el.addEventListener('input',  gerarMensagem);
     el.addEventListener('change', gerarMensagem);
