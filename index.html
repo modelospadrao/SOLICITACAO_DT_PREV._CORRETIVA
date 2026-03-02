@@ -351,8 +351,35 @@
 
 <div id="popupOverlay"></div>
 
+
+<!-- POPUP: AVISO INICIAL (LGPD + intervenção) -->
+<div id="aviso-popup" class="popup" style="text-align:center;">
+  <p style="font-size:13px; line-height:1.7; margin:0 0 10px 0;">
+    ⚡ <strong>SOLICITAÇÃO DE SERVIÇO DT</strong>
+  </p>
+
+  <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.18); border-radius:6px; padding:10px 12px; font-size:11px; color:#ccc; text-align:left; margin-bottom:8px; line-height:1.75;">
+    🔒 <strong style="color:#fff;">Nota 1 — Privacidade & LGPD</strong><br>
+    Este aplicativo <strong style="color:#fff;">não coleta, não armazena e não transmite</strong> nenhuma informação a servidores externos. Todos os dados ficam exclusivamente no dispositivo do usuário e são usados apenas para gerar a mensagem operacional. Em conformidade com a <strong style="color:#fff;">LGPD — Lei nº 13.709/2018</strong>.
+  </div>
+
+  <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.18); border-radius:6px; padding:10px 12px; font-size:11px; color:#ccc; text-align:left; margin-bottom:8px; line-height:1.75;">
+    📡 <strong style="color:#fff;">Nota 2 — Natureza dos Dados</strong><br>
+    Os campos preenchidos — município, logradouro público, coordenadas GPS de vias públicas, códigos de equipamentos elétricos (transformadores, estruturas, postes) e identificação de equipes operacionais — são <strong style="color:#fff;">dados operacionais de infraestrutura pública</strong>, não configurando dados pessoais conforme o <strong style="color:#fff;">Art. 5º, I da LGPD</strong>. Nenhuma informação pessoal sensível é solicitada ou tratada.
+  </div>
+
+  <div style="background:rgba(180,0,0,0.35); border:1px solid #ff4444; border-radius:6px; padding:10px 12px; font-size:11px; color:#ffcccc; text-align:left; margin-bottom:14px; line-height:1.75;">
+    ⛔ <strong style="color:#fff;">Nota 3 — Alerta Operacional</strong><br>
+    A equipe <strong style="color:#fff;">não está autorizada a intervir na rede elétrica</strong> sem a DT gerada pelo Operador. A <strong style="color:#fff;">DT é a Ordem de Trabalho</strong> obrigatória que autoriza a atuação em campo. Qualquer intervenção sem DT viola os procedimentos operacionais.
+  </div>
+
+  <div class="popup-buttons">
+    <button style="background:#00b145;color:#fff;font-weight:bold;" onclick="fecharPopup('aviso-popup'); mostrarNovoManter()">✔ LI E ENTENDI</button>
+  </div>
+</div>
+
 <!-- POPUP: NOVO OU MANTER -->
-<div id="novo-popup" class="popup" style="text-align:center;">
+<div id="novo-popup" class="popup" style="text-align:center; display:none;">
   <p>⚡ <strong>SOLICITAÇÃO DE SERVIÇO</strong><br><br>
     Deseja iniciar um <strong>NOVO</strong> preenchimento<br>
     ou <strong>MANTER</strong> os dados anteriores?
@@ -377,6 +404,61 @@
   <div>
     <button class="btn-sim" onclick="confirmarLimpar()">Sim</button>
     <button class="btn-nao" onclick="fecharPopup('limpar-confirm-popup')">Não</button>
+  </div>
+</div>
+
+<!-- POPUP: NÚMERO DA DT -->
+<div id="dt-popup" class="popup" style="text-align:center; max-width:340px;">
+
+  <!-- ALERTA -->
+  <div style="background:#7a0000; border:2px solid #ff4444; border-radius:8px; padding:10px 12px; margin-bottom:12px;">
+    <div style="font-size:14px; font-weight:bold; color:#ffcccc; margin-bottom:6px;">⛔ ATENÇÃO — ORDEM OBRIGATÓRIA</div>
+    <div style="font-size:12px; color:#ffdddd; line-height:1.6; text-align:left;">
+      A equipe <strong style="color:#fff;">SOMENTE está autorizada a intervir na rede elétrica</strong> após o Operador gerar a DT.<br><br>
+      A <strong style="color:#fff;">DT é a Ordem de Trabalho</strong> que libera a atuação em campo.<br><br>
+      ⚠️ <em>Não intervenha na rede antes de obter o número da DT com o Operador.</em>
+    </div>
+  </div>
+
+  <p style="margin:0 0 10px 0; font-size:13px; color:#fff;">📋 Digite o número da DT fornecido pelo Operador:</p>
+
+  <!-- CAMPO DT: prefixo fixo + 8 números -->
+  <div style="display:flex; align-items:center; gap:0; margin:6px 0 4px 0;">
+    <div style="padding:10px 12px; font-size:16px; font-weight:bold; letter-spacing:2px;
+                background:#333; color:#ffdd57; border:2px solid #aaa;
+                border-right:none; border-radius:6px 0 0 6px;
+                font-family:Courier New,monospace;">DT</div>
+    <input type="text" id="dt-popup-input" placeholder="00000000" maxlength="8"
+           oninput="this.value=this.value.replace(/[^0-9]/g,''); atualizarContadorDTPopup()"
+           style="flex:1; padding:10px 8px; font-size:16px; letter-spacing:3px; font-weight:bold;
+                  text-align:center; box-sizing:border-box; border:2px solid #aaa;
+                  border-radius:0 6px 6px 0; background:#f0f0f0; color:#000;
+                  font-family:Courier New,monospace;">
+  </div>
+  <div id="dt-popup-counter" style="font-size:11px; color:#e63946; font-weight:bold; margin-bottom:10px;">
+    Digite apenas números — 0 / 8 dígitos
+  </div>
+
+  <div class="popup-buttons">
+    <button id="btn-confirmar-dt"
+            style="background:#555;color:#aaa;font-weight:bold;cursor:not-allowed;opacity:0.5;"
+            disabled onclick="confirmarEnvioComDT()">📲 CONFIRMAR E ENVIAR</button>
+    <button style="background:#555;color:#fff;" onclick="fecharPopupDT()">✖ CANCELAR</button>
+  </div>
+</div>
+
+<!-- POPUP: GPS INVÁLIDO -->
+<div id="gps-erro-popup" class="popup" style="text-align:center;">
+  <p style="font-size:14px; line-height:1.7;">
+    📍 <strong>LINK INVÁLIDO</strong><br><br>
+    O campo GPS aceita <strong>apenas links</strong> copiados do Maps.<br><br>
+    <span style="color:#ffaaaa;">❌ Coordenadas não são aceitas.<br>
+    Exemplo inválido: <em>-3.717220, -38.543370</em></span><br><br>
+    <span style="color:#aaffaa;">✅ Cole o link copiado do Maps.<br>
+    Exemplo: <em>https://maps.app.goo.gl/...</em></span>
+  </p>
+  <div class="popup-buttons">
+    <button style="background:#1a73e8;color:#fff;font-weight:bold;" onclick="fecharPopup('gps-erro-popup')">✔ ENTENDI</button>
   </div>
 </div>
 
@@ -410,32 +492,46 @@
   <h1>📋 SOLICITAÇÃO DE SERVIÇO DT</h1>
   <div id="formFields">
 
-    <h2>📋 Dados da Solicitação</h2>
+    <h2>📋 Dados</h2>
+        <label>👷 Equipe: <span class="req">*</span></label>
+    <input type="text" id="equipe" placeholder="XXX-XX-NNX" maxlength="10"
+           oninput="aplicarMascaraLead(this); gerarMensagem()">    
 
-    <label>📡 Alimentador: <span class="req">*</span></label>
-    <div class="autocomplete-wrapper">
-      <input type="text" id="alimentador" placeholder="DIGITE PARA FILTRAR..." autocomplete="off"
-             oninput="filtrarAlimentador(this)" onblur="fecharListaDelay()">
-      <div class="autocomplete-list" id="alimentador-list"></div>
-    </div>
+
+    
+        <label>🏠 Endereço: <span class="req">*</span></label>
+    <input type="text" id="endereco" placeholder="RUA - NUMERO" maxlength="80"
+           oninput="mascaraEndereco(this); gerarMensagem()">
 
     <label>🗺️ Municipio / Bairro: <span class="req">*</span></label>
-    <input type="text" id="area" placeholder="DIGITE A ÁREA"
+    <input type="text" id="area" placeholder="INFORME DETALHES DO LOCAL"
            oninput="soMaiuscula(this); gerarMensagem()">
+    
+        <label>📍 GPS (link): <span class="req">*</span></label>
+    <input type="text" id="gps" placeholder="Cole aqui o link copiado do Maps"
+           oninput="gerarMensagem()" onblur="validarLinkGPS(this)" style="text-transform:none;">
+    <button class="btn-gps" onclick="abrirGifGPS()">
+      🗺️ VER TUTORIAL E ABRIR MAPS
+    </button>
+    <span class="gps-hint">
+      ⚠️ <strong>Cole apenas o link</strong> copiado do Maps. Coordenadas não são aceitas.<br>
+      Toque acima → veja as instruções → abra o Maps →
+      toque na sua localização → <strong>Compartilhar → Copiar link</strong> → cole acima
+    </span>
 
-    <label>🔢 Número da DT: <span class="req">*</span></label>
-    <span class="label-sub">Solicitar N° Operador, quando criado! Exatamente 10 caracteres</span>
-    <input type="text" id="dt" placeholder="DIGITE OS 10 CARACTERES" maxlength="10"
-           oninput="soMaiuscula(this); atualizarContadorDT(); gerarMensagem()">
-    <div id="dt-counter" class="campo-counter invalido">0 / 10 caracteres</div>
+    <h2>✏️ Detalhes</h2>
+    
 
-    <label>🔌 DESCREVER NÚMERO DO CODIGO: <span class="req">*</span></label>
-    <span class="label-sub">Selecione o tipo e digite o código abaixo</span>
+    <label>🔌 defina o tipo de referência: <span class="req">*</span></label>
+
     <div class="trafo-btns">
       <button type="button" id="btn-trafo"      class="btn-tipo-trafo" onclick="selecionarTipoTrafo('TRAFO',      this)">⚡TRAFO</button>
       <button type="button" id="btn-estrutura"  class="btn-tipo-trafo" onclick="selecionarTipoTrafo('ESTRUTURA',  this)">⚡ESTRUTURA</button>
       <button type="button" id="btn-tombamento" class="btn-tipo-trafo" onclick="selecionarTipoTrafo('TOMBAMENTO', this)">⚡TOMBAMENTO</button>
     </div>
+    <br>
+
+        <span class="label-sub">Selecione o tipo e digite o código abaixo</span>
     <input type="text" id="trafo" placeholder="DIGITE O CÓDIGO" maxlength="40"
            oninput="mascaraTrafoPlus(this); gerarMensagem()">
 
@@ -448,25 +544,21 @@
     </div>
     <div id="desc-servico" style="display:none; margin: 2px 0 6px 0; padding: 8px 10px; font-size: 12px; font-style: italic; color: #555; background:#f0f0f0; border-radius:4px; border-left: 3px solid #e63946;"></div>
     <input type="hidden" id="tipoServico">
+    <br>
 
-    <label>📍 GPS (link): <span class="req">*</span></label>
-    <input type="text" id="gps" placeholder="Cole aqui o link copiado do Maps"
-           oninput="gerarMensagem()" style="text-transform:none;">
-    <button class="btn-gps" onclick="abrirGifGPS()">
-      🗺️ VER TUTORIAL E ABRIR MAPS
-    </button>
-    <span class="gps-hint">
-      Toque acima → veja as instruções → abra o Maps →
-      toque na sua localização → <strong>Compartilhar → Copiar link</strong> → cole acima
-    </span>
+        <label>📡 Alimentador: <span class="req">*</span></label>
+    <div class="autocomplete-wrapper">
+      <input type="text" id="alimentador" placeholder="DIGITE PARA FILTRAR..." autocomplete="off"
+             oninput="filtrarAlimentador(this)" onblur="fecharListaDelay()">
+      <div class="autocomplete-list" id="alimentador-list"></div>
+    </div>
 
-    <label>🏠 Endereço: <span class="req">*</span></label>
-    <input type="text" id="endereco" placeholder="RUA - BAIRRO - NUMERO" maxlength="80"
-           oninput="mascaraEndereco(this); gerarMensagem()">
 
-    <label>👷 Equipe: <span class="req">*</span></label>
-    <input type="text" id="equipe" placeholder="XXX-XX-NNX" maxlength="10"
-           oninput="aplicarMascaraLead(this); gerarMensagem()">
+
+
+
+
+
 
     <h2>✏️ Descrição do Serviço</h2>
     <label>📝 Descreva o Serviço: <span class="req">*</span></label>
@@ -591,7 +683,7 @@ const alimentadores = [
   "UMB01I1","UMB01I2"
 ];
 
-const CAMPOS_IDS = ['alimentador','area','dt','trafo','tipoServico','causa','gps','endereco','equipe','preApr','r5ro','descricao'];
+const CAMPOS_IDS = ['alimentador','area','trafo','tipoServico','causa','gps','endereco','equipe','preApr','r5ro','descricao'];
 const MIN_CHARS  = 20;
 let modoEscuro   = true;
 let tipoTrafoSel = ''; // 'TRAFO' | 'ESTRUTURA' | 'TOMBAMENTO'
@@ -675,6 +767,12 @@ function selecionarTipoTrafo(tipo, btn) {
   tipoTrafoSel = tipo;
   document.querySelectorAll('.btn-tipo-trafo').forEach(b => b.classList.remove('selecionado'));
   btn.classList.add('selecionado');
+  const placeholders = {
+    'TRAFO':      'DIGITE O CÓDIGO DO TRAFO',
+    'ESTRUTURA':  'DIGITE O CÓDIGO DA ESTRUTURA',
+    'TOMBAMENTO': 'DIGITE O CÓDIGO DO TOMBAMENTO'
+  };
+  document.getElementById('trafo').placeholder = placeholders[tipo] || 'DIGITE O CÓDIGO';
   gerarMensagem();
 }
 
@@ -778,25 +876,37 @@ function abrirMaps() {
   }
 }
 
+function validarLinkGPS(el) {
+  const val = el.value.trim();
+  if (!val) return; // vazio, não valida
+  if (!val.startsWith('http://') && !val.startsWith('https://')) {
+    el.value = '';
+    gerarMensagem();
+    document.getElementById('gps-erro-popup').style.display = 'block';
+    showOverlay();
+  }
+}
+
 // ── GERAR MENSAGEM SOLICITAÇÃO ─────────────────────────────
-function gerarMensagem() {
+function gerarMensagem(dtVal) {
   const v = id => document.getElementById(id).value.trim();
+  const dt = dtVal || '';
   let msg = '*SOLICITAÇÃO DE SERVIÇO DT*\n';
-  msg += '━━━━━━━━━━━━━\n';
-  if (v('alimentador')) msg += `*ALIMENTADOR:* ${v('alimentador')}\n`;
+  msg += '---------------------------\n';
+  if (v('equipe'))      msg += `*EQUIPE:* ${v('equipe')}\n`;
+  if (v('endereco'))    msg += `*ENDEREÇO:* ${v('endereco')}\n`;
   if (v('area'))        msg += `*MUNICÍPIO / BAIRRO:* ${v('area')}\n`;
-  if (v('dt'))          msg += `*Nº DT:* ${v('dt')}\n`;
+  if (v('gps'))         msg += `*GPS:* ${v('gps')}\n`;
   const labelTrafo = tipoTrafoSel || 'TRAFO / ESTRUTURA / TOMBAMENTO';
   if (v('trafo'))       msg += `*${labelTrafo}:* ${v('trafo')}\n`;
   if (v('tipoServico')) msg += `*TIPO DE SERVIÇO:* ${v('tipoServico')}\n`;
+  if (v('alimentador')) msg += `*ALIMENTADOR:* ${v('alimentador')}\n`;
+  if (dt)               msg += `*Nº DT:* ${dt}\n`;
+  if (v('descricao'))   msg += `*DESCRIÇÃO:* ${v('descricao')}\n`;
   if (v('causa'))       msg += `*CAUSA:* ${v('causa')}\n`;
-  if (v('gps'))         msg += `*GPS:* ${v('gps')}\n`;
-  if (v('endereco'))    msg += `*ENDEREÇO:* ${v('endereco')}\n`;
-  if (v('equipe'))      msg += `*EQUIPE:* ${v('equipe')}\n`;
   if (v('preApr'))      msg += `*PRÉ APR:* ${v('preApr')}\n`;
   if (v('r5ro'))        msg += `*REALIZADO 5R0:* ${v('r5ro')}\n`;
-  if (v('descricao'))   msg += `*DESCRIÇÃO:* ${v('descricao')}\n`;
-  msg += '━━━━━━━━━━━━━';
+  msg += '---------------------------';
   document.getElementById('previewBox').value = msg;
 }
 
@@ -824,30 +934,25 @@ function alternarModo() {
 // ── VALIDAÇÃO ──────────────────────────────────────────────
 function verificarSolicitacao() {
   const obrigatorios = [
-    { id: 'alimentador', label: '📡 ALIMENTADOR' },
-    { id: 'area',        label: '🗺️ MUNICÍPIO / BAIRRO' },
-    { id: 'dt',          label: '🔢 NÚMERO DA DT' },
-    { id: 'trafo',       label: '🔌 TRAFO / ESTRUTURA / TOMBAMENTO (selecione o tipo e digite o código)' },
-    { id: 'tipoServico', label: '🔧 TIPO DE SERVIÇO' },
-    { id: 'causa',       label: '⚠️ CAUSA' },
-    { id: 'gps',         label: '📍 GPS (link)' },
-    { id: 'endereco',    label: '🏠 ENDEREÇO' },
     { id: 'equipe',      label: '👷 EQUIPE' },
+    { id: 'endereco',    label: '🏠 ENDEREÇO' },
+    { id: 'area',        label: '🗺️ MUNICÍPIO / BAIRRO' },
+    { id: 'gps',         label: '📍 GPS (link)' },
+    { id: 'trafo',       label: '🔌 TRAFO / ESTRUTURA / TOMBAMENTO' },
+    { id: 'tipoServico', label: '🔧 TIPO DE SERVIÇO' },
+    { id: 'alimentador', label: '📡 ALIMENTADOR' },
+    { id: 'descricao',   label: '📝 DESCRIÇÃO DO SERVIÇO' },
+    { id: 'causa',       label: '⚠️ CAUSA' },
     { id: 'preApr',      label: '📋 PRÉ APR (SIM ou NÃO)' },
     { id: 'r5ro',        label: '⚙️ REALIZADO 5R0 (SIM ou NÃO)' },
-    { id: 'descricao',   label: '📝 DESCRIÇÃO DO SERVIÇO' },
   ];
-  const faltando = obrigatorios.filter(f => !document.getElementById(f.id).value.trim());
   if (!tipoTrafoSel && document.getElementById('trafo').value.trim()) {
     mostrarErro('⚠️ Selecione o tipo:<br>⚡ TRAFO, 🏗️ ESTRUTURA ou 🏷️ TOMBAMENTO');
     return false;
   }
+  const faltando = obrigatorios.filter(f => !document.getElementById(f.id).value.trim());
   if (faltando.length) {
     mostrarErro('PREENCHA OS CAMPOS OBRIGATÓRIOS 🚨<br><br>' + faltando.map(f => f.label).join('<br>'));
-    return false;
-  }
-  if (document.getElementById('dt').value.trim().length < 10) {
-    mostrarErro('⚠️ Nº DA DT incompleto!<br>Obrigatório exatamente <strong>10 caracteres</strong>.');
     return false;
   }
   if (document.getElementById('descricao').value.trim().length < MIN_CHARS) {
@@ -872,7 +977,54 @@ function mostrarErro(html) {
 // ── ENVIOS WHATSAPP ────────────────────────────────────────
 function enviarSolicitacao() {
   if (!verificarSolicitacao()) return;
-  gerarMensagem();
+  // Reset popup DT
+  document.getElementById('dt-popup-input').value = '';
+  const el = document.getElementById('dt-popup-counter');
+  el.textContent = 'Digite apenas números — 0 / 8 dígitos';
+  el.style.color = '#e63946';
+  const btn = document.getElementById('btn-confirmar-dt');
+  btn.disabled = true;
+  btn.style.background = '#555';
+  btn.style.color = '#aaa';
+  btn.style.cursor = 'not-allowed';
+  btn.style.opacity = '0.5';
+  document.getElementById('dt-popup').style.display = 'block';
+  showOverlay();
+}
+
+function atualizarContadorDTPopup() {
+  const val = document.getElementById('dt-popup-input').value.length;
+  const el  = document.getElementById('dt-popup-counter');
+  const btn = document.getElementById('btn-confirmar-dt');
+  if (val < 8) {
+    el.textContent = `Digite apenas números — ${val} / 8 dígitos`;
+    el.style.color = '#e63946';
+    btn.disabled = true;
+    btn.style.background = '#555';
+    btn.style.color = '#aaa';
+    btn.style.cursor = 'not-allowed';
+    btn.style.opacity = '0.5';
+  } else {
+    el.textContent = '✔ 8 / 8 dígitos — pronto para enviar!';
+    el.style.color = '#88ff88';
+    btn.disabled = false;
+    btn.style.background = '#00b145';
+    btn.style.color = '#fff';
+    btn.style.cursor = 'pointer';
+    btn.style.opacity = '1';
+  }
+}
+
+function fecharPopupDT() {
+  fecharPopup('dt-popup');
+}
+
+function confirmarEnvioComDT() {
+  const numeros = document.getElementById('dt-popup-input').value.trim();
+  if (numeros.length < 8) return;
+  const dt = 'DT' + numeros;
+  fecharPopup('dt-popup');
+  gerarMensagem(dt);
   const msg = document.getElementById('previewBox').value;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
 }
@@ -896,27 +1048,113 @@ function confirmarLimpar() {
   document.querySelectorAll('.btn-sim-nao').forEach(b => b.classList.remove('selecionado-sim','selecionado-nao'));
   document.getElementById('desc-servico').style.display = 'none';
   document.getElementById('desc-causa').style.display = 'none';
-  atualizarContadorDT();
+}
+
+// ── LOCAL STORAGE ──────────────────────────────────────────
+const LS_KEY = 'solicitacao_dados';
+
+function salvarDados() {
+  const dados = {};
+  CAMPOS_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) dados[id] = el.value;
+  });
+  dados.tipoTrafoSel = tipoTrafoSel;
+  dados.tipoServico  = document.getElementById('tipoServico').value;
+  dados.preApr       = document.getElementById('preApr').value;
+  dados.r5ro         = document.getElementById('r5ro').value;
+  try { localStorage.setItem(LS_KEY, JSON.stringify(dados)); } catch(e) {}
+}
+
+function restaurarDados() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const dados = JSON.parse(raw);
+    CAMPOS_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && dados[id] !== undefined) el.value = dados[id];
+    });
+    // Restaura botão trafo
+    if (dados.tipoTrafoSel) {
+      tipoTrafoSel = dados.tipoTrafoSel;
+      const map = { 'TRAFO':'btn-trafo','ESTRUTURA':'btn-estrutura','TOMBAMENTO':'btn-tombamento' };
+      const btnId = map[tipoTrafoSel];
+      if (btnId) document.getElementById(btnId)?.classList.add('selecionado');
+      const placeholders = { 'TRAFO':'DIGITE O CÓDIGO DO TRAFO','ESTRUTURA':'DIGITE O CÓDIGO DA ESTRUTURA','TOMBAMENTO':'DIGITE O CÓDIGO DO TOMBAMENTO' };
+      document.getElementById('trafo').placeholder = placeholders[tipoTrafoSel] || 'DIGITE O CÓDIGO';
+    }
+    // Restaura botão serviço
+    if (dados.tipoServico) {
+      document.getElementById('tipoServico').value = dados.tipoServico;
+      const servBtns = { 'MANUTENÇÃO PREVENTIVA':'btn-prev','MANUTENÇÃO CORRETIVA':'btn-corr','INSPEÇÃO ENTORNO ALIMENTADORES':'btn-insp','MANOBRAS':'btn-mano' };
+      const sid = servBtns[dados.tipoServico];
+      if (sid) { document.getElementById(sid)?.classList.add('selecionado'); mostrarDescServico(dados.tipoServico); }
+    }
+    // Restaura SIM/NÃO
+    ['preApr','r5ro'].forEach(campo => {
+      const val = dados[campo];
+      if (val) {
+        const btnSim = document.getElementById(campo+'-sim');
+        const btnNao = document.getElementById(campo+'-nao');
+        if (val === 'SIM' && btnSim) btnSim.classList.add('selecionado-sim');
+        if (val === 'NÃO' && btnNao) btnNao.classList.add('selecionado-nao');
+      }
+    });
+    atualizarContador('descricao','desc-counter');
+    gerarMensagem();
+  } catch(e) {}
+}
+
+function temDadosSalvos() {
+  try { return !!localStorage.getItem(LS_KEY); } catch(e) { return false; }
 }
 
 // ── NOVO / MANTER ──────────────────────────────────────────
-function novoPreenchimento() { confirmarLimpar(); fecharPopup('novo-popup'); }
-function manterDados()       { fecharPopup('novo-popup'); gerarMensagem(); }
+function mostrarNovoManter() {
+  document.getElementById('novo-popup').style.display = 'block';
+  showOverlay();
+}
+
+function novoPreenchimento() {
+  confirmarLimpar();
+  try { localStorage.removeItem(LS_KEY); } catch(e) {}
+  fecharPopup('novo-popup');
+}
+
+function manterDados() {
+  fecharPopup('novo-popup');
+  restaurarDados();
+}
 
 // ── OVERLAY / POPUPS ───────────────────────────────────────
 function showOverlay() { document.getElementById('popupOverlay').style.display = 'block'; }
 function hideOverlay() { document.getElementById('popupOverlay').style.display = 'none'; }
 function fecharPopup(id) { document.getElementById(id).style.display = 'none'; hideOverlay(); }
 
+// Atualiza desc serviço ao restaurar
+function mostrarDescServico(val) {
+  const box = document.getElementById('desc-servico');
+  const descricoes = {
+    'MANUTENÇÃO PREVENTIVA':         '🛡️ A equipe realizará serviço preventivo para evitar futuros problemas na rede elétrica.',
+    'MANUTENÇÃO CORRETIVA':          '🔨 A equipe corrigirá problemas visuais já identificados na rede elétrica.',
+    'INSPEÇÃO ENTORNO ALIMENTADORES':'👁️ A equipe inspecionará o entorno para localizar pontos que necessitam de manutenção preventiva ou corretiva.',
+    'MANOBRAS':                      '🔀 A equipe realizará manobras na rede elétrica conforme programação.'
+  };
+  if (val && descricoes[val]) { box.textContent = descricoes[val]; box.style.display = 'block'; }
+  else box.style.display = 'none';
+}
+
 // ── INIT ───────────────────────────────────────────────────
 window.onload = function() {
-  document.getElementById('novo-popup').style.display = 'block';
+  // Mostra aviso inicial (LGPD + alerta)
+  document.getElementById('aviso-popup').style.display = 'block';
   showOverlay();
   atualizarContador('descricao', 'desc-counter');
-  atualizarContadorDT();
+  // Auto-salva a cada interação
   document.querySelectorAll('#formFields input, #formFields select, #formFields textarea').forEach(el => {
-    el.addEventListener('input',  gerarMensagem);
-    el.addEventListener('change', gerarMensagem);
+    el.addEventListener('input',  () => { gerarMensagem(); salvarDados(); });
+    el.addEventListener('change', () => { gerarMensagem(); salvarDados(); });
   });
 };
 </script>
