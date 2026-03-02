@@ -352,35 +352,45 @@
 <div id="popupOverlay"></div>
 
 
-<!-- POPUP: AVISO INICIAL (LGPD + intervenção) -->
-<div id="aviso-popup" class="popup" style="text-align:center;">
-  <p style="font-size:13px; line-height:1.7; margin:0 0 10px 0;">
-    ⚡ <strong>SOLICITAÇÃO DE SERVIÇO DT</strong>
-  </p>
-
-  <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.18); border-radius:6px; padding:10px 12px; font-size:11px; color:#ccc; text-align:left; margin-bottom:8px; line-height:1.75;">
-    🔒 <strong style="color:#fff;">Nota 1 — Privacidade & LGPD</strong><br>
-    Este aplicativo <strong style="color:#fff;">não coleta, não armazena e não transmite</strong> nenhuma informação a servidores externos. Todos os dados ficam exclusivamente no dispositivo do usuário e são usados apenas para gerar a mensagem operacional. Em conformidade com a <strong style="color:#fff;">LGPD — Lei nº 13.709/2018</strong>.
+<!-- POPUP: AVISO INICIAL (LGPD) -->
+<div id="aviso-popup" class="popup" style="
+  text-align:center;
+  max-width:96vw; width:460px;
+  max-height:88vh;
+  display:none;
+  flex-direction:column;
+  padding:0;
+  overflow:hidden;
+">
+  <!-- BOTÃO NO TOPO — sempre visível -->
+  <div style="padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.12);">
+    <button style="background:#00b145; color:#fff; font-weight:bold; width:59%;
+                   padding:12px; border:none; border-radius:6px; font-size:13px; cursor:pointer;
+                   font-family:Cambria,Cochin,Georgia,Times,sans-serif; letter-spacing:0.5px;"
+            onclick="fecharPopup('aviso-popup'); mostrarNovoManter()">✔ LI E ESTOU DE ACORDO</button>
   </div>
 
-  <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.18); border-radius:6px; padding:10px 12px; font-size:11px; color:#ccc; text-align:left; margin-bottom:8px; line-height:1.75;">
-    📡 <strong style="color:#fff;">Nota 2 — Natureza dos Dados</strong><br>
-    Os campos preenchidos — município, logradouro público, coordenadas GPS de vias públicas, códigos de equipamentos elétricos (transformadores, estruturas, postes) e identificação de equipes operacionais — são <strong style="color:#fff;">dados operacionais de infraestrutura pública</strong>, não configurando dados pessoais conforme o <strong style="color:#fff;">Art. 5º, I da LGPD</strong>. Nenhuma informação pessoal sensível é solicitada ou tratada.
-  </div>
+  <!-- CONTEÚDO COM SCROLL -->
+  <div style="overflow-y:auto; padding:14px 16px; flex:1;">
 
-  <div style="background:rgba(180,0,0,0.35); border:1px solid #ff4444; border-radius:6px; padding:10px 12px; font-size:11px; color:#ffcccc; text-align:left; margin-bottom:14px; line-height:1.75;">
-    ⛔ <strong style="color:#fff;">Nota 3 — Alerta Operacional</strong><br>
-    A equipe <strong style="color:#fff;">não está autorizada a intervir na rede elétrica</strong> sem a DT gerada pelo Operador. A <strong style="color:#fff;">DT é a Ordem de Trabalho</strong> obrigatória que autoriza a atuação em campo. Qualquer intervenção sem DT viola os procedimentos operacionais.
-  </div>
+    <div style="border:1px solid rgba(255,255,255,0.18); border-radius:6px; padding:12px; font-size:15px; color:#ccc; text-align:left; line-height:1.8; margin-bottom:10px; background:rgba(255,255,255,0.04);">
+      🔒 <strong style="color:#fff; font-size:12px;">Nota 1 — Privacidade &amp; LGPD</strong><br><br>
+      Este aplicativo <strong style="color:#fff;">não coleta, não armazena e não transmite</strong> nenhuma informação a servidores externos. Todos os dados ficam exclusivamente no seu dispositivo e são usados apenas para gerar a mensagem operacional de campo.<br><br>
+      Em conformidade com a <strong style="color:#fff;">LGPD — Lei nº 13.709/2018</strong>.
+    </div>
 
-  <div class="popup-buttons">
-    <button style="background:#00b145;color:#fff;font-weight:bold;" onclick="fecharPopup('aviso-popup'); mostrarNovoManter()">✔ LI E ENTENDI</button>
+    <div style="border:1px solid rgba(255,255,255,0.18); border-radius:6px; padding:12px; font-size:15px; color:#ccc; text-align:left; line-height:1.8; background:rgba(255,255,255,0.04);">
+      📡 <strong style="color:#fff; font-size:12px;">Nota 2 — Natureza dos Dados</strong><br><br>
+      Os dados inseridos — município, logradouro público, coordenadas GPS de vias públicas, códigos de equipamentos elétricos (transformadores, estruturas, postes) e identificação de equipes — são <strong style="color:#fff;">dados operacionais de infraestrutura pública</strong>.<br><br>
+      Esses dados <strong style="color:#fff;">não configuram dados pessoais</strong> conforme o <strong style="color:#fff;">Art. 5º, I da LGPD</strong>. Nenhuma informação pessoal sensível é solicitada ou tratada por este aplicativo.
+    </div>
+
   </div>
 </div>
 
 <!-- POPUP: NOVO OU MANTER -->
 <div id="novo-popup" class="popup" style="text-align:center; display:none;">
-  <p>⚡ <strong>SOLICITAÇÃO DE SERVIÇO</strong><br><br>
+  <p>⚡ <strong>SOLICITAÇÃO DE SERVIÇO DT</strong><br><br>
     Deseja iniciar um <strong>NOVO</strong> preenchimento<br>
     ou <strong>MANTER</strong> os dados anteriores?
   </p>
@@ -408,43 +418,54 @@
 </div>
 
 <!-- POPUP: NÚMERO DA DT -->
-<div id="dt-popup" class="popup" style="text-align:center; max-width:340px;">
+<div id="dt-popup" class="popup" style="text-align:center; max-width:96vw; width:400px; padding:0; overflow:hidden; display:none; flex-direction:column;">
 
-  <!-- ALERTA -->
-  <div style="background:#7a0000; border:2px solid #ff4444; border-radius:8px; padding:10px 12px; margin-bottom:12px;">
-    <div style="font-size:14px; font-weight:bold; color:#ffcccc; margin-bottom:6px;">⛔ ATENÇÃO — ORDEM OBRIGATÓRIA</div>
-    <div style="font-size:12px; color:#ffdddd; line-height:1.6; text-align:left;">
-      A equipe <strong style="color:#fff;">SOMENTE está autorizada a intervir na rede elétrica</strong> após o Operador gerar a DT.<br><br>
-      A <strong style="color:#fff;">DT é a Ordem de Trabalho</strong> que libera a atuação em campo.<br><br>
-      ⚠️ <em>Não intervenha na rede antes de obter o número da DT com o Operador.</em>
+  <!-- CABEÇALHO -->
+  <div style="padding:14px 16px 10px 16px; border-bottom:1px solid rgba(255,255,255,0.12);">
+    <div style="font-size:14px; font-weight:bold; color:#fff;">📋 SOLICITAR Nº DA DT</div>
+  </div>
+
+  <!-- CONTEÚDO -->
+  <div style="overflow-y:auto; padding:14px 16px; flex:1;">
+
+    <!-- NOTA 3 -->
+    <div style="border:1px solid #ff4444; border-radius:6px; padding:12px; font-size:11px; color:#ffcccc; text-align:left; line-height:1.8; margin-bottom:14px; background:rgba(180,0,0,0.35);">
+      ⛔ <strong style="color:#fff; font-size:12px;">Nota 3 — Alerta Operacional</strong><br><br>
+      A equipe <strong style="color:#fff;">não está autorizada a intervir na rede elétrica</strong> sem a DT gerada pelo Operador.<br><br>
+      A <strong style="color:#fff;">DT é a Ordem de Trabalho</strong> obrigatória que autoriza a atuação em campo. Qualquer intervenção sem DT viola os procedimentos operacionais.
+    </div>
+
+    <p style="margin:0 0 10px 0; font-size:12px; color:#ccc;">Digite o número da DT fornecido pelo Operador:</p>
+
+    <!-- CAMPO DT: prefixo fixo + 8 números -->
+    <div style="display:flex; align-items:center; gap:0; margin:6px 0 4px 0;">
+      <div style="padding:10px 12px; font-size:16px; font-weight:bold; letter-spacing:2px;
+                  background:#333; color:#ffdd57; border:2px solid #aaa;
+                  border-right:none; border-radius:6px 0 0 6px;
+                  font-family:Courier New,monospace;">DT</div>
+      <input type="text" id="dt-popup-input" placeholder="00000000" maxlength="8"
+             oninput="this.value=this.value.replace(/[^0-9]/g,''); atualizarContadorDTPopup()"
+             style="flex:1; padding:10px 8px; font-size:16px; letter-spacing:3px; font-weight:bold;
+                    text-align:center; box-sizing:border-box; border:2px solid #aaa;
+                    border-radius:0 6px 6px 0; background:#f0f0f0; color:#000;
+                    font-family:Courier New,monospace;">
+    </div>
+    <div id="dt-popup-counter" style="font-size:11px; color:#e63946; font-weight:bold; margin-bottom:10px;">
+      Digite apenas números — 0 / 8 dígitos
+    </div>
+
+  </div>
+
+  <!-- RODAPÉ FIXO -->
+  <div style="padding:10px 16px; border-top:1px solid rgba(255,255,255,0.12);">
+    <div class="popup-buttons" style="margin:0;">
+      <button id="btn-confirmar-dt"
+              style="background:#555;color:#aaa;font-weight:bold;cursor:not-allowed;opacity:0.5;"
+              disabled onclick="confirmarEnvioComDT()">📲 CONFIRMAR E ENVIAR</button>
+      <button style="background:#555;color:#fff;" onclick="fecharPopupDT()">✖ CANCELAR</button>
     </div>
   </div>
-
-  <p style="margin:0 0 10px 0; font-size:13px; color:#fff;">📋 Digite o número da DT fornecido pelo Operador:</p>
-
-  <!-- CAMPO DT: prefixo fixo + 8 números -->
-  <div style="display:flex; align-items:center; gap:0; margin:6px 0 4px 0;">
-    <div style="padding:10px 12px; font-size:16px; font-weight:bold; letter-spacing:2px;
-                background:#333; color:#ffdd57; border:2px solid #aaa;
-                border-right:none; border-radius:6px 0 0 6px;
-                font-family:Courier New,monospace;">DT</div>
-    <input type="text" id="dt-popup-input" placeholder="00000000" maxlength="8"
-           oninput="this.value=this.value.replace(/[^0-9]/g,''); atualizarContadorDTPopup()"
-           style="flex:1; padding:10px 8px; font-size:16px; letter-spacing:3px; font-weight:bold;
-                  text-align:center; box-sizing:border-box; border:2px solid #aaa;
-                  border-radius:0 6px 6px 0; background:#f0f0f0; color:#000;
-                  font-family:Courier New,monospace;">
-  </div>
-  <div id="dt-popup-counter" style="font-size:11px; color:#e63946; font-weight:bold; margin-bottom:10px;">
-    Digite apenas números — 0 / 8 dígitos
-  </div>
-
-  <div class="popup-buttons">
-    <button id="btn-confirmar-dt"
-            style="background:#555;color:#aaa;font-weight:bold;cursor:not-allowed;opacity:0.5;"
-            disabled onclick="confirmarEnvioComDT()">📲 CONFIRMAR E ENVIAR</button>
-    <button style="background:#555;color:#fff;" onclick="fecharPopupDT()">✖ CANCELAR</button>
-  </div>
+</div>
 </div>
 
 <!-- POPUP: GPS INVÁLIDO -->
@@ -988,7 +1009,7 @@ function enviarSolicitacao() {
   btn.style.color = '#aaa';
   btn.style.cursor = 'not-allowed';
   btn.style.opacity = '0.5';
-  document.getElementById('dt-popup').style.display = 'block';
+  document.getElementById('dt-popup').style.display = 'flex';
   showOverlay();
 }
 
@@ -1048,6 +1069,15 @@ function confirmarLimpar() {
   document.querySelectorAll('.btn-sim-nao').forEach(b => b.classList.remove('selecionado-sim','selecionado-nao'));
   document.getElementById('desc-servico').style.display = 'none';
   document.getElementById('desc-causa').style.display = 'none';
+}
+
+// ── TOGGLE NOTAS POPUP ─────────────────────────────────────
+function toggleNota(id) {
+  const el   = document.getElementById(id);
+  const icon = document.getElementById(id + '-icon');
+  const aberto = el.style.display !== 'none';
+  el.style.display  = aberto ? 'none' : 'block';
+  icon.textContent  = aberto ? '▼' : '▲';
 }
 
 // ── LOCAL STORAGE ──────────────────────────────────────────
@@ -1148,7 +1178,7 @@ function mostrarDescServico(val) {
 // ── INIT ───────────────────────────────────────────────────
 window.onload = function() {
   // Mostra aviso inicial (LGPD + alerta)
-  document.getElementById('aviso-popup').style.display = 'block';
+  document.getElementById('aviso-popup').style.display = 'flex';
   showOverlay();
   atualizarContador('descricao', 'desc-counter');
   // Auto-salva a cada interação
