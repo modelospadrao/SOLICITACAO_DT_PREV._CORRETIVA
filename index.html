@@ -466,7 +466,6 @@
     </div>
   </div>
 </div>
-</div>
 
 <!-- POPUP: GPS INVÁLIDO -->
 <div id="gps-erro-popup" class="popup" style="text-align:center;">
@@ -485,20 +484,20 @@
 
 <!-- POPUP: GPS INSTRUÇÃO -->
 <div id="gps-gif-popup">
-  <div class="gif-title">📍 COMO COPIAR O LINK DE LOCALIZAÇÃO</div>
+  <strong style="color:#4fc3f7;">🗺️ SIGA ETAPAS PARA OBTER LINK</strong><br>
+  <button class="btn-abrir-maps-popup" onclick="abrirMaps()">🗺️ ABRIR MAPS</button><br><br>
   <img src="instrucao_gps.jpg" alt="Tutorial GPS"
        onerror="this.style.display='none'; document.getElementById('gif-erro').style.display='block'">
   <div id="gif-erro">
     📂 Coloque o arquivo <strong>instrucao_gps.jpg</strong> na mesma pasta deste HTML.
   </div>
   <div class="gif-instrucoes">
-    <strong style="color:#4fc3f7;">🗺️ SIGA ETAPAS P/ OBTER LINK</strong><br>
-    1️⃣ Toque em <strong>"Abrir link"</strong> — abrirá o Maps<br>
-    2️⃣ No Maps, toque em <strong>"Compartilhar"</strong><br>
+    1️⃣ Toque em <strong>"ABRIR MAPS"</strong><br>
+    2️⃣ No Maps, toque em <strong>"COMPARTILHAR"</strong><br>
     3️⃣ Selecione <strong>"Copiar link"</strong><br>
-    4️⃣ Volte aqui e cole no campo GPS
+    4️⃣ Volte aqui e cole no campo de GPS
   </div>
-  <button class="btn-abrir-maps-popup" onclick="abrirMaps()">🗺️ ABRIR MAPS</button>
+  
   <button class="btn-fechar-gif" onclick="fecharGifPopup()">✖ FECHAR</button>
 </div>
 
