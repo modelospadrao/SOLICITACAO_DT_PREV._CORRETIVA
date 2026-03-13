@@ -345,6 +345,52 @@
 
     #equipe { letter-spacing: 2px; font-weight: bold; }
     span.req { color: #e63946; }
+    /* Custom select tipo endereço */
+    .tipo-select-wrapper {
+      position: relative;
+      flex: 0 0 80px;
+    }
+    .tipo-selected {
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 15px;
+      margin: 2px 0 6px 0;
+      border: 1px solid #ddd;
+      border-radius: 17px;
+      background-color: #f0f0f0;
+      cursor: pointer;
+      text-align: center;
+      letter-spacing: 1px;
+      user-select: none;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+    .tipo-dropdown {
+      display: none;
+      position: absolute;
+      top: 110%;
+      left: 0;
+      z-index: 999;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      min-width: 210px;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+    .tipo-dropdown.aberto { display: block; }
+    .tipo-dropdown-item {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      padding: 10px 12px;
+      cursor: pointer;
+      white-space: pre;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .tipo-dropdown-item:hover { background: #0077cc; color: #fff; }
+    .tipo-dropdown-item.selecionado { background: #e8f4ff; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -514,8 +560,44 @@
 
     
         <label>🏠 Endereço: <span class="req">*</span></label>
-    <input type="text" id="endereco" placeholder="RUA - NUMERO" maxlength="80"
-           oninput="mascaraEndereco(this); gerarMensagem()">
+    <div style="display:flex; gap:6px; align-items:center;">
+
+      <!-- Custom select: fechado=abreviação, aberto=abreviação+descrição -->
+      <div class="tipo-select-wrapper">
+        <input type="hidden" id="endereco-tipo" value="">
+        <div class="tipo-selected" id="tipo-selected-display" onclick="toggleTipoDropdown()">---</div>
+        <div class="tipo-dropdown" id="tipo-dropdown">
+          <div class="tipo-dropdown-item" data-value="" onclick="selecionarTipo('','---')">---</div>
+          <div class="tipo-dropdown-item" data-value="R"   onclick="selecionarTipo('R',  'R  ')">R   — Rua</div>
+          <div class="tipo-dropdown-item" data-value="AV"  onclick="selecionarTipo('AV', 'AV ')">AV  — Avenida</div>
+          <div class="tipo-dropdown-item" data-value="TV"  onclick="selecionarTipo('TV', 'TV ')">TV  — Travessa</div>
+          <div class="tipo-dropdown-item" data-value="EST" onclick="selecionarTipo('EST','EST')">EST — Estrada</div>
+          <div class="tipo-dropdown-item" data-value="ROD" onclick="selecionarTipo('ROD','ROD')">ROD — Rodovia</div>
+          <div class="tipo-dropdown-item" data-value="VL"  onclick="selecionarTipo('VL', 'VL ')">VL  — Vila</div>
+          <div class="tipo-dropdown-item" data-value="BC"  onclick="selecionarTipo('BC', 'BC ')">BC  — Beco</div>
+          <div class="tipo-dropdown-item" data-value="AL"  onclick="selecionarTipo('AL', 'AL ')">AL  — Alameda</div>
+          <div class="tipo-dropdown-item" data-value="PC"  onclick="selecionarTipo('PC', 'PC ')">PC  — Praça</div>
+          <div class="tipo-dropdown-item" data-value="LG"  onclick="selecionarTipo('LG', 'LG ')">LG  — Largo</div>
+          <div class="tipo-dropdown-item" data-value="QD"  onclick="selecionarTipo('QD', 'QD ')">QD  — Quadra</div>
+          <div class="tipo-dropdown-item" data-value="PQ"  onclick="selecionarTipo('PQ', 'PQ ')">PQ  — Parque</div>
+          <div class="tipo-dropdown-item" data-value="JD"  onclick="selecionarTipo('JD', 'JD ')">JD  — Jardim</div>
+          <div class="tipo-dropdown-item" data-value="PV"  onclick="selecionarTipo('PV', 'PV ')">PV  — Povoado</div>
+          <div class="tipo-dropdown-item" data-value="LOT" onclick="selecionarTipo('LOT','LOT')">LOT — Loteamento</div>
+          <div class="tipo-dropdown-item" data-value="SRV" onclick="selecionarTipo('SRV','SRV')">SRV — Servidão</div>
+          <div class="tipo-dropdown-item" data-value="CON" onclick="selecionarTipo('CON','CON')">CON — Condomínio</div>
+          <div class="tipo-dropdown-item" data-value="FAZ" onclick="selecionarTipo('FAZ','FAZ')">FAZ — Fazenda</div>
+          <div class="tipo-dropdown-item" data-value="DIS" onclick="selecionarTipo('DIS','DIS')">DIS — Distrito</div>
+          <div class="tipo-dropdown-item" data-value="ZL"  onclick="selecionarTipo('ZL', 'ZL ')">ZL  — Zona</div>
+        </div>
+      </div>
+
+      <input type="text" id="endereco-rua" placeholder="NOME DO LOGRADOURO" maxlength="60"
+             style="flex:1; min-width:0;"
+             oninput="this.value=this.value.toUpperCase(); gerarMensagem()">
+      <input type="text" id="endereco-num" placeholder="Nº" maxlength="10"
+             style="flex:0 0 60px;"
+             oninput="this.value=this.value.replace(/[^0-9]/g,''); gerarMensagem()">
+    </div>
 
     <label>🗺️ Municipio / Bairro: <span class="req">*</span></label>
     <input type="text" id="area" placeholder="INFORME DETALHES DO LOCAL"
@@ -654,7 +736,7 @@
 
   <!-- ASSINATURA -->
   <p class="assinatura">
-    © 2026 Emanuel Aguiar (Tecnico Eletrotecnico Junior)<br>
+    © 2026 Emanuel Aguiar (Tecnico Eletrotecnico Junior) — v2.0<br>
     Todos os direitos reservados.
   </p>
 </div>
@@ -690,7 +772,7 @@ const alimentadores = [
   "UMB01I1","UMB01I2"
 ];
 
-const CAMPOS_IDS = ['alimentador','area','trafo','tipoServico','causa','gps','endereco','equipe','preApr','r5ro','descricao'];
+const CAMPOS_IDS = ['alimentador','area','trafo','tipoServico','causa','gps','endereco-tipo','endereco-rua','endereco-num','equipe','preApr','r5ro','descricao'];
 const MIN_CHARS  = 20;
 let modoEscuro   = true;
 let tipoTrafoSel = ''; // 'TRAFO' | 'ESTRUTURA' | 'TOMBAMENTO'
@@ -894,6 +976,28 @@ function validarLinkGPS(el) {
   }
 }
 
+// ── CUSTOM SELECT TIPO ENDEREÇO ────────────────────────────
+function toggleTipoDropdown() {
+  document.getElementById('tipo-dropdown').classList.toggle('aberto');
+}
+function selecionarTipo(valor, display) {
+  document.getElementById('endereco-tipo').value = valor;
+  document.getElementById('tipo-selected-display').textContent = display;
+  document.getElementById('tipo-dropdown').classList.remove('aberto');
+  // marca selecionado visualmente
+  document.querySelectorAll('.tipo-dropdown-item').forEach(el => {
+    el.classList.toggle('selecionado', el.dataset.value === valor);
+  });
+  gerarMensagem();
+  salvarDados();
+}
+// fecha ao clicar fora
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.tipo-select-wrapper')) {
+    document.getElementById('tipo-dropdown').classList.remove('aberto');
+  }
+});
+
 // ── GERAR MENSAGEM SOLICITAÇÃO ─────────────────────────────
 function gerarMensagem(dtVal) {
   const v = id => document.getElementById(id).value.trim();
@@ -901,7 +1005,12 @@ function gerarMensagem(dtVal) {
   let msg = '*SOLICITAÇÃO DE SERVIÇO DT*\n';
   msg += '---------------------------\n';
   if (v('equipe'))      msg += `*EQUIPE:* ${v('equipe')}\n`;
-  if (v('endereco'))    msg += `*ENDEREÇO:* ${v('endereco')}\n`;
+  const endTipo = document.getElementById('endereco-tipo').value.trim();
+  const endRua  = document.getElementById('endereco-rua').value.trim();
+  const endNum  = document.getElementById('endereco-num').value.trim();
+  const endBase = [endTipo, endRua].filter(Boolean).join(' ');
+  const endFull = endBase && endNum ? `${endBase} - N° ${endNum}` : (endBase || endNum);
+  if (endFull)          msg += `*ENDEREÇO:* ${endFull}\n`;
   if (v('area'))        msg += `*MUNICÍPIO / BAIRRO:* ${v('area')}\n`;
   if (v('gps'))         msg += `*GPS:* ${v('gps')}\n`;
   const labelTrafo = tipoTrafoSel || 'TRAFO / ESTRUTURA / TOMBAMENTO';
@@ -942,7 +1051,9 @@ function alternarModo() {
 function verificarSolicitacao() {
   const obrigatorios = [
     { id: 'equipe',      label: '👷 EQUIPE' },
-    { id: 'endereco',    label: '🏠 ENDEREÇO' },
+    { id: 'endereco-tipo', label: '🏠 ENDEREÇO (tipo: R, AV, TV...)' },
+    { id: 'endereco-rua',  label: '🏠 ENDEREÇO (nome do logradouro)' },
+    { id: 'endereco-num',  label: '🏠 ENDEREÇO (número)' },
     { id: 'area',        label: '🗺️ MUNICÍPIO / BAIRRO' },
     { id: 'gps',         label: '📍 GPS (link)' },
     { id: 'trafo',       label: '🔌 TRAFO / ESTRUTURA / TOMBAMENTO' },
